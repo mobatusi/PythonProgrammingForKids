@@ -1,0 +1,24 @@
+encrypted_letters = 'jklmnopqrstuvwxyzabcdefghi '
+unencrypted_letters = 'abcdefghijklmnopqrstuvwxyz '
+
+decrypt_map = { }
+encrypt_map = { }
+for x in range(len(encrypted_letters)):
+    encrypted_letter = encrypted_letters[x]
+    unencrypted_letter = unencrypted_letters[x]
+    decrypt_map[unencrypted_letter] = encrypted_letter
+    encrypt_map[encrypted_letter] = unencrypted_letter
+
+def decrypt(text):
+    rtn = [ ]
+    for l in text:
+        rtn.append(decrypt_map[l])
+    return ''.join(rtn)
+
+def encrypt(text):
+    rtn = [ ]
+    for l in text:
+        rtn.append(encrypt_map[l])
+    return ''.join(rtn)
+
+print(decrypt('nyve r tcftb zj jkzcc ylexip zk xfvj srtb wfli jvtfeuj'))

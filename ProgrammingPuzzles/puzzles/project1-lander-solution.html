@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<title>Python for Kids</title>
+<meta name="generator" content="SiteBaker v1.8.5" />
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+<meta content="utf-8" http-equiv="encoding" />
+<meta name="viewport" content="width=device-width" />
+<link rel="stylesheet" href="/theme/main.v19.css" type="text/css" media="screen"></link>
+<link rel="stylesheet" href="/resources/highlight.v1.css" type="text/css" media="screen"></link>
+<link href="/resources/lightbox.v2.51.css" rel="stylesheet" />
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/resources/jquery-1.8.3.min.js"></script>
+</head>
+<body>
+<div id="header">
+	<div id="logo">
+		<img src="/resources/jasonrbriggs.png" alt="Site logo" />
+	</div>
+	<div id="nav">
+	<ul class="drop">
+    	<li><img src="/resources/dropdown-menu.png" alt="dropdown menu button" />
+	    <ul>
+			<li><a class="navlink" href="/journal">JOURNAL</a></li>
+			<li><a class="navlink" href="/python-for-kids">PYTHON FOR KIDS</a></li>
+			<li><a class="navlink" href="/bio.html">BIO</a></li>
+			<li><a class="navlink" href="/contact.html">CONTACT</a></li>
+		</ul>
+		</li>
+	</ul>
+	</div>
+	<div>
+		<div class="navicons">
+			<a class="navimglink" onclick="javascript:return searchToggle()"><img src="/resources/search-15.png" alt="Search" /></a>
+			<div id="nonsearchspan">
+			<a class="navimglink" href="/journal/feed.xml"><img src="/resources/rss-15.png" alt="RSS feed" /></a>
+			<a class="navimglink" href="http://twitter.com/jason_r_briggs"><img src="/resources/twitter-14.jpg" alt="Twitter" /></a>
+			<a class="navimglink" href="http://mstdn.io/@jasonrbriggs"><img src="/resources/mastodon.png" alt="Mastodon" /></a>
+			<a class="navimglink" href="http://github.com/jasonrbriggs"><img src="/resources/github-15.png" alt="Github" /></a>
+			<a class="navimglink" href="http://www.goodreads.com/author/show/7052551.Jason_R_Briggs"><img src="/resources/goodreads-15.png" alt="Good Reads" /></a>
+			<a class="navimglink" href="/tags/"><img src="/resources/tag-15.jpg" alt="Tag cloud" /></a>
+			</div>
+			<div id="searchspan" style="display:none"><form id="searchform" action="/api/search" method="get"><input type="text" value="" name="text" onkeypress="return checkSubmit(this, event)" /></form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="contentcontainer">
+
+	<div class="main">
+		<div id="pageheader">
+			<img class="pageheaderimg" alt="banner image" src="/resources/pfk-banner.jpg" />
+		</div>
+	
+		<div class="content">
+			<div class="title">
+				<h1>Python for Kids</h1>
+				<h2>Project #1 - Lunar Lander - Partial Solution</h2>
+			</div>
+	
+			<div class="postmeta">
+				<a href="/python-for-kids/puzzles/project1-lander-solution.html"><img class="nofloat" src="/resources/link13.png" /> Permalink</a> <a href="https://twitter.com/share?url=http%3A//jasonrbriggs.com/python-for-kids/puzzles/project1-lander-solution.html&via=jason_r_briggs"><img class="nofloat" src="/resources/twitter-14.jpg" /> Twitter</a> 
+			</div>
+	
+			<div class="post"><h1>Project #1 - Lunar Lander - Partial Solution</h1>
+
+<p>For this program, we need a class for the game itself (similar to the examples in the book), a class for the lander, and one for the platform. </p>
+
+<p>To start with we'll need to import the <code>tkinter</code> and <code>time</code> modules:</p>
+
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">time</span>
+</code></pre></div>
+
+<p>Next we'll create a few variables which will contain values we'll use later in the program to calculate the effect of gravity on the falling speed of the lander, and the effect of the engines/thrusters:</p>
+
+<div class="codehilite"><pre><span></span><code><span class="n">GRAVITY</span> <span class="o">=</span> <span class="mf">0.0005</span>
+<span class="n">ENGINE_POWER</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.00003</span>
+<span class="n">THRUSTER_POWER</span> <span class="o">=</span> <span class="mf">0.00001</span>
+<span class="n">MAXIMUM_ENGINE_POWER</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.002</span>
+<span class="n">MAXIMUM_THRUSTER_POWER</span> <span class="o">=</span> <span class="mf">0.0001</span>
+</code></pre></div>
+
+<p>Our game class will be quite familiar if you've reached the last few chapters in the book:</p>
+
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Game</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tk</span> <span class="o">=</span> <span class="n">Tk</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Lander&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">resizable</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">wm_attributes</span><span class="p">(</span><span class="s2">&quot;-topmost&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">Canvas</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tk</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">focus_set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas_height</span> <span class="o">=</span> <span class="mi">500</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas_width</span> <span class="o">=</span> <span class="mi">1000</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sprites</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">def</span> <span class="nf">mainloop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">sprite</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sprites</span><span class="p">:</span>
+                    <span class="n">sprite</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">update_idletasks</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">Game</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre></div>
+
+<p>This class has an <code>__init__</code> function and a <code>mainloop</code> function. The mainloop is similar to the example in the book - it loops forever, and if the variable <code>running</code> is True, it loops through any sprites and calls their <code>move</code> function. If this code doesn't make sense, try reading the final section in <a href="/python-for-kids">Python for Kids</a>, which might help. If we run this program now, a canvas will appear, but nothing much will happen (however, it's a good idea to run our program as we go, to make sure we haven't introduced any bugs in our code).</p>
+
+<p>Our lander is just a small square. You could draw something a little more realistic - but for our purposes a square will do. This will help us test out the logic of the game, and it's easier enough to make it look better, once we're happy with how our program works. To start with we need an <code>__init__</code> function for our <code>Lander</code> class. Let's create the Lander class just after our Game class:</p>
+
+<div class="codehilite"><pre><span></span><code>    <span class="c1">###</span>
+    <span class="k">def</span> <span class="nf">mainloop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">sprite</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sprites</span><span class="p">:</span>
+                    <span class="n">sprite</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">update_idletasks</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span><span class="c1">###</span>
+
+<span class="k">class</span> <span class="nc">Lander</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">game</span><span class="o">.</span><span class="n">canvas</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_rectangle</span><span class="p">(</span><span class="mi">340</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mf">0.01</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine_x</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine_y</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fuel</span> <span class="o">=</span> <span class="mi">2000</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">down</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">False</span>
+</code></pre></div>
+
+<p>Our <code>__init__</code> takes one parameter - which will be an object of our Game class. We then create a number of object variables: <code>canvas</code> stores the canvas variable of the game object, <code>id</code> stores the identifier of the rectangle (our lander square) we draw on the screen, <code>time</code> stores the current time (we'll see that used shortly), <code>x</code> and <code>y</code> are the horizontal and vertical amounts to move the lander across the screen, <code>engine_x</code> is a variable to use for the horizontal power of the thrusters, <code>engine_y</code> will be used for the vertical power of the engine, and <code>fuel</code> is the amount of fuel the lander has left. The <code>down</code>, <code>left</code>, and <code>right</code> variables are used to flag whether the engine is firing (the down key has been pressed) or the thrusters are firing (left or right keys were pressed).</p>
+
+<p>The remainder of the function is used to bind the keypresses to functions we'll create shortly, and create text that will be displayed on the top left of the canvas:</p>
+
+<div class="codehilite"><pre><span></span><code>        <span class="c1">###</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">down</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">False</span> <span class="c1">###</span>
+        <span class="n">game</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">bind_all</span><span class="p">(</span><span class="s1">&#39;&lt;KeyPress-Down&gt;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine_down</span><span class="p">)</span>
+        <span class="n">game</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">bind_all</span><span class="p">(</span><span class="s1">&#39;&lt;KeyPress-Left&gt;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine_left</span><span class="p">)</span>
+        <span class="n">game</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">bind_all</span><span class="p">(</span><span class="s1">&#39;&lt;KeyPress-Right&gt;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine_right</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine_y_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Main Engine: off&#39;</span><span class="p">,</span> <span class="n">anchor</span> <span class="o">=</span> <span class="s1">&#39;nw&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine_x_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Thrusters: off&#39;</span><span class="p">,</span> <span class="n">anchor</span> <span class="o">=</span> <span class="s1">&#39;nw&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine_fuel_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Fuel: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">fuel</span><span class="p">,</span> <span class="n">anchor</span> <span class="o">=</span> <span class="s1">&#39;nw&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>The <code>engine_down</code>, <code>engine_left</code> and <code>engine_right</code> functions are all quite similar. In each case, we set check the associated variable (<code>down</code>, <code>left</code>, or <code>right</code>) - if the value is True it means the engine (or thruster) is already switched on, so we want to switch it off again (hit the key once, turn it on, hit the key again, turn it off). So we set the variable value to False, set the <code>engine_y</code> (or <code>engine_x</code>) variable to 0, and then change the text to display that the engine (or, again, thruster) is off.
+If the engine isn't already on (the variable was False), then we switch it on. In this case, we just set the variable to True and change the text. Why don't we set the <code>engine_y</code> or <code>engine_x</code> variables? We'll see how those values are calculated shortly.</p>
+
+<div class="codehilite"><pre><span></span><code>        <span class="c1">###</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine_y_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Main Engine: off&#39;</span><span class="p">,</span> <span class="n">anchor</span> <span class="o">=</span> <span class="s1">&#39;nw&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine_x_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Thrusters: off&#39;</span><span class="p">,</span> <span class="n">anchor</span> <span class="o">=</span> <span class="s1">&#39;nw&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine_fuel_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Fuel: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">fuel</span><span class="p">,</span> <span class="n">anchor</span> <span class="o">=</span> <span class="s1">&#39;nw&#39;</span><span class="p">)</span> 
+        <span class="c1">###</span>
+    <span class="k">def</span> <span class="nf">engine_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">down</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">down</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">engine_y</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">itemconfig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine_y_text</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Main Engine: off&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">down</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">itemconfig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine_y_text</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Main Engine: on&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">engine_left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">engine_x</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">itemconfig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine_x_text</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Thrusters: off&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">itemconfig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine_x_text</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Thrusters: left&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">engine_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">engine_x</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">itemconfig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine_x_text</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Thrusters: off&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">itemconfig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine_x_text</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Thrusters: right&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>The final function in the Lander class is <code>move</code>:</p>
+
+<div class="codehilite"><pre><span></span><code>    <span class="c1">###</span>
+    <span class="k">def</span> <span class="nf">engine_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">engine_x</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">itemconfig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine_x_text</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Thrusters: off&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">itemconfig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine_x_text</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Thrusters: right&#39;</span><span class="p">)</span>
+    <span class="c1">###</span>
+    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">time_since_last</span> <span class="o">=</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span>
+        <span class="k">if</span> <span class="n">time_since_last</span> <span class="o">&gt;</span> <span class="mf">0.1</span><span class="p">:</span>
+</code></pre></div>
+
+<p>The first part of this function, we get the time and store the value in variable <code>now</code>. We then work out the last time we moved the lander by subtracting <code>now</code> from the object variable <code>time</code>. If <code>time_since_last</code> is more than a tenth of a second, we'll continue with the rest of the code in this function:        </p>
+
+<div class="codehilite"><pre><span></span><code>        <span class="c1">###</span>
+        <span class="k">if</span> <span class="n">time_since_last</span> <span class="o">&gt;</span> <span class="mf">0.1</span><span class="p">:</span> <span class="c1">###</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">down</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine_y</span> <span class="o">&gt;</span> <span class="n">MAXIMUM_ENGINE_POWER</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">engine_y</span> <span class="o">+=</span> <span class="n">ENGINE_POWER</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine_x</span> <span class="o">&lt;</span> <span class="n">MAXIMUM_THRUSTER_POWER</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">engine_x</span> <span class="o">+=</span> <span class="n">THRUSTER_POWER</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine_x</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">MAXIMUM_THRUSTER_POWER</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">engine_x</span> <span class="o">-=</span> <span class="n">THRUSTER_POWER</span>
+</code></pre></div>
+
+<p>If the down key was pressed, then the <code>down</code> object variable will be True. If that variable is true <em>AND</em> the value of the <code>engine_y</code> variable is larger than the value of <code>MAXIMUM_ENGINE_POWER</code>, then we'll add the value of <code>ENGINE_POWER</code> to our <code>engine_y</code> object variable. Let's say the game has just started, and the player hits the down button, and it's the first time Python has run this function. The value of <code>down</code> will be True, the value of <code>engine_y</code> will be 0. So we'll add -0.00003 and the new value of <code>engine_y</code> will be -0.00003.
+It's a similar process for the <code>left</code> and <code>right</code> object variables. We check if the value of <code>engine_x</code> has reached the value of <code>MAXIMUM_THRUSTER_POWER</code> and if not, we add (or subtract) the value of <code>THRUSTER_POWER</code>.</p>
+
+<div class="codehilite"><pre><span></span><code>            <span class="c1">###</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine_x</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">MAXIMUM_THRUSTER_POWER</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">engine_x</span> <span class="o">-=</span> <span class="n">THRUSTER_POWER</span> 
+            <span class="c1">###</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">down</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fuel</span> <span class="o">-=</span> <span class="mi">2</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fuel</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fuel</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fuel</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">itemconfig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine_fuel_text</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Fuel: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">fuel</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Next we reduce the amount of fuel in the Lander's tanks, by subtracting an amount from the <code>fuel</code> variable if any of the <code>down</code>, <code>left</code> or <code>right</code> variables are True. The engine has more power, so it reduces fuel by 2 rather than 1. Finally, in this code, if the fuel is less than zero, we just set it back to zero (not the best way to write this section of code, but it has the advantage of being simple), and then update the text to show the amount of fuel available.</p>
+
+<div class="codehilite"><pre><span></span><code>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fuel</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">engine_y</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">engine_x</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">time_since_last</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine_x</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="p">(</span><span class="n">time_since_last</span> <span class="o">*</span> <span class="n">GRAVITY</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">time_since_last</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine_y</span><span class="p">)</span>
+</code></pre></div>
+
+<p>In the final section of this function, we check whether the amount of fuel is 0. If it is, then we turn our engine/thrusters off by setting the <code>engine_y</code> and <code>engine_x</code> variables to 0.
+We then calculate the new position of the lander. The <code>x</code> value is easy to calculate - multiply the value of <code>engine_x</code> by the time since we last ran the move function (that's the value of <code>time_since_last</code>), and add to the last value of the <code>x</code> variable. Why are we doing this? Because the lander is supposed to be floating in space, so the effective of the engine should be cumulative.
+The <code>y</code> value is slightly more complicated because we need to calculate the effect of gravity on the lander. So once again we multiply <code>time_since_last</code> by the value of <code>engine_y</code>, and add that to the <code>y</code> variable, but we also multiply <code>time_since_last</code> by the value of the <code>GRAVITY</code> variable and add. <br />
+Once we've calculated these two values, we can move the lander:</p>
+
+<div class="codehilite"><pre><span></span><code>            <span class="c1">###</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">time_since_last</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine_x</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="p">(</span><span class="n">time_since_last</span> <span class="o">*</span> <span class="n">GRAVITY</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">time_since_last</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine_y</span><span class="p">)</span> <span class="c1">###</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+</code></pre></div>
+
+<p>The final part of our code is to create a class for the Platform, then to create an object of each of our two new classes, and add them to the list of sprites that the Game stores:</p>
+
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Platform</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">game</span><span class="o">.</span><span class="n">canvas</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_rectangle</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">480</span><span class="p">,</span> <span class="mi">650</span><span class="p">,</span> <span class="mi">490</span><span class="p">)</span>
+
+<span class="c1">###</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">Game</span><span class="p">()</span> <span class="c1">###</span>
+<span class="n">lander</span> <span class="o">=</span> <span class="n">Lander</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="n">platform</span> <span class="o">=</span> <span class="n">Platform</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">sprites</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lander</span><span class="p">)</span>
+<span class="c1">###</span>
+<span class="n">g</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span> <span class="c1">###</span>
+</code></pre></div>
+
+<p>You might've noticed there's some code missing. If you run this game at the moment, it won't finish when you land too hard at the bottom of the screen, or miss the platform. If you've got to the end of the <a href="/python-for-kids">book</a>, and understand how to do simple collision detection, hopefully you can figure out how to add this code. Here's one possible modification to the <code>move</code> function which shows how you can check if the lander hits the bottom of the screen too hard. At the moment, it just prints a message (Okay or BOOM) to the console:</p>
+
+<div class="codehilite"><pre><span></span><code>    <span class="c1">###</span>
+    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1">###</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">coords</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">500</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mf">0.4</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s1">&#39;BOOM&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Okay&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+</code></pre></div>
+
+<p>You can download the full code for this solution <a href="/python-for-kids/puzzles/project1-lander.py.txt">here</a>.</p>
+</div>
+		</div>
+	</div>
+	
+</div>
+
+<div>
+<script type="text/javascript">
+$('[href*="png"]').attr('rel', 'lightbox');
+$('[href*="jpg"]').attr('rel', 'lightbox');
+</script>
+<script type="text/javascript" src="/resources/utils.v2.js"></script>
+<script type="text/javascript" src="/resources/lightbox.v2.51.js"></script>
+</div>
+</body>
+</html>

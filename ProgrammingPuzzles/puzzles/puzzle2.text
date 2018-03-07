@@ -1,0 +1,25 @@
+plugins: menu
+title: Python for Kids
+sub-title: Puzzle Number 2
+banner-image: resources/pfk-banner.jpg
+
+
+_Posted, 9 Dec 2012_
+
+Difficulty: medium - hard
+
+A [cryptogram](http://en.wikipedia.org/wiki/Cryptogram) is a piece of text with jumbled letters. One way of generating cryptograms is to use a wheel with two circles of letters (one circle of letters inside the other). You turn the inner circle a certain number of letters, and then match the real letter on the outer circle with the encrypted letter on the inner circle (you can see an example of a cryptograph wheel [here](https://sites.google.com/site/codesforscouts/sliding-scale-or-cryptograph)).
+
+You can also write a python program to encrypt and decrypt text. Try creating a program to decrypt the following cryptogram:
+
+    nyve r tcftb zj jkzcc ylexip zk xfvj srtb wfli jvtfeuj
+    
+If you think about the two circles of letters for a moment, this text was encrypting as if by turning the inner circle so that the outer letter 'a' lines up with 'j'.
+
+Here's some code that might help you get started:
+
+    unencrypted_letters = 'abcdefghijklmnopqrstuvwxyz '
+    
+You're probably going to use a few for-loops (see Chapter 6), and one more hint to get you started: remember that strings are like _lists_ of characters (so you can access a single character in a list the same way you might access a single item in a list - see Chapter 3 in [Python for Kids](/python-for-kids)).
+
+_Update: The full solution can be found [here](puzzle2-solution.html)._

@@ -1,0 +1,77 @@
+plugins: menu
+title: Python for Kids
+sub-title: Puzzle Number 6 (Solution)
+banner-image: resources/pfk-banner.jpg
+
+
+_Posted, 14 Apr 2013_
+
+Each number in the fibonacci series is calculated by adding the previous two numbers. So to find a particular number we need to work out all the previous numbers in the series, starting with 0 and 1.
+
+Let's start with the definition of our function, which has a single parameter 'n':
+
+```python
+def fib(n):
+    pass
+```
+
+There's no point in adding anything for the first two numbers in the series, so we can create an if-statement and return 0 or 1 depending on the value of the parameter:
+
+```python
+###
+def fib(n):###
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
+```
+
+Finally we need to loop through and calculate each number. If we have two variables `a` and `b` with values 0 and 1, we can create a loop that loops to the value of parameter `n`. Each time we loop, we add `a` and `b` to get the next value in the series. We then set our `a` variable to the value of `b` and `b` gets the value of `c`. Once we've completed all the loops, we return the value in `c`.
+
+```python
+###
+def fib(n):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1###
+    else:
+        a = 0
+        b = 1
+        for x in range(1, n):
+            c = a + b
+            a = b
+            b = c
+        return c
+```
+
+Let's look at an example of how the loop works, which might help explain the logic. 
+
+If we called the function with the number 3 (this effectively means we want to calculate the 4th number in the series), the first time we loop (x would be 1), we calculate `c` by adding 0 and 1 (which makes 1 rather obviously). The new value of `a` then becomes 1 and `b` becomes 1. 
+
+We loop again (x is now 2), and the value of `c` is calculated as 2. So the new value of `a` is 1, and the new value of `b` is 2. 
+
+The final loop (x is now 3 which equals the value of `n`), we calculate `c` as 3. We still set the value of the `a` and `b` variables (even though we don't need these values any more), but the loop then ends and we return the value of `c`.
+
+We can try our code with some later numbers in the fibonacci series. 
+
+```python
+>>> fib(30)
+832040
+>>> fib(50)
+12586269025
+>>> fib(100)
+354224848179261915075
+```
+
+One final note: this isn't the only way to calculate numbers in the fibonacci series. There's a more advanced style of writing functions called [recursion](http://en.wikipedia.org/wiki/Recursion) - which is a way for a function to calculate part of a value, and then to call itself again to calculate the next part of the value. Here's just one example of rewriting our `fib` function, using recursion:
+
+```python
+def fib(n):
+    if n < 2:
+        return n
+    else:
+        return fib(n - 1) + fib(n - 2)
+```
+
+Using recursion can result in simpler, and sometimes, more elegant code... but it can also be more difficult to understand.

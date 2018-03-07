@@ -1,0 +1,15 @@
+plugins: menu
+title: Python for Kids
+sub-title: Puzzle Number 4
+banner-image: resources/pfk-banner.jpg
+
+
+_Posted, 22 Jan 2013_
+
+Difficulty: extremely hard
+
+Take the code created in the final programming puzzle in Chapter 18 of [Python for Kids](/python-for-kids) (#3 Moving Platforms), and add an 'elevator' to the game. The elevator will be a platform that moves up and down the game screen (rather than left to right).
+
+See this [blog post](/journal/2013/01/25/stickman-elevators.html) for a hint.
+
+_Update: The full solution can be found [here](puzzle4-solution.html)._

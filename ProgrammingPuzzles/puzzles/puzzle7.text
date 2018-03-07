@@ -1,0 +1,20 @@
+plugins: menu
+title: Python for Kids
+sub-title: Puzzle Number 7
+shadow: draw
+banner-image: resources/pfk-banner.jpg
+
+
+_Posted, 24 Apr 2013_
+
+Difficulty: medium
+
+In [Chapter 12](/python-for-kids), you learn how to draw simple shapes using the tkinter `canvas`, and how to bind keys to functions and perform basic animations. You can bind the mouse to functions in the same way. For example, the event `'<Motion>'` is fired every time the mouse moves, `'<ButtonPress-1>'` is fired when the left mouse button is pressed, and `'<ButtonRelease-1>'` is fired when the button is released.
+
+With those events, and using the canvas, you can create a simple drawing program. When you click on the canvas and drag the mouse your program will draw a line. Release the button and it stops drawing.
+
+_Hint: you might need to use the `mainloop` function of `Tk` to get this program to work properly._
+
+![draw](/python-for-kids/puzzles/puzzle7-draw.png)
+
+_Update: The full solution can be found [here](puzzle7-solution.html)._

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<title>Python for Kids</title>
+<meta name="generator" content="SiteBaker v1.8.5" />
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+<meta content="utf-8" http-equiv="encoding" />
+<meta name="viewport" content="width=device-width" />
+<link rel="stylesheet" href="/theme/main.v19.css" type="text/css" media="screen"></link>
+<link rel="stylesheet" href="/resources/highlight.v1.css" type="text/css" media="screen"></link>
+<link href="/resources/lightbox.v2.51.css" rel="stylesheet" />
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/resources/jquery-1.8.3.min.js"></script>
+
+<style type="text/css">
+[alt="lunar lander"] {
+-moz-box-shadow: 4px 4px 5px #aaaaaa;
+-webkit-box-shadow: 4px 4px 5px #aaaaaa;
+box-shadow: 4px 4px 5px #aaaaaa;
+/* For IE 8 */
+-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#aaaaaa')";
+/* For IE 5.5 - 7 */
+filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#aaaaaa');
+}
+</style>
+
+<style type="text/css">
+[alt="lunar lander work in progress"] {
+-moz-box-shadow: 4px 4px 5px #aaaaaa;
+-webkit-box-shadow: 4px 4px 5px #aaaaaa;
+box-shadow: 4px 4px 5px #aaaaaa;
+/* For IE 8 */
+-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#aaaaaa')";
+/* For IE 5.5 - 7 */
+filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#aaaaaa');
+}
+</style>
+</head>
+<body>
+<div id="header">
+	<div id="logo">
+		<img src="/resources/jasonrbriggs.png" alt="Site logo" />
+	</div>
+	<div id="nav">
+	<ul class="drop">
+    	<li><img src="/resources/dropdown-menu.png" alt="dropdown menu button" />
+	    <ul>
+			<li><a class="navlink" href="/journal">JOURNAL</a></li>
+			<li><a class="navlink" href="/python-for-kids">PYTHON FOR KIDS</a></li>
+			<li><a class="navlink" href="/bio.html">BIO</a></li>
+			<li><a class="navlink" href="/contact.html">CONTACT</a></li>
+		</ul>
+		</li>
+	</ul>
+	</div>
+	<div>
+		<div class="navicons">
+			<a class="navimglink" onclick="javascript:return searchToggle()"><img src="/resources/search-15.png" alt="Search" /></a>
+			<div id="nonsearchspan">
+			<a class="navimglink" href="/journal/feed.xml"><img src="/resources/rss-15.png" alt="RSS feed" /></a>
+			<a class="navimglink" href="http://twitter.com/jason_r_briggs"><img src="/resources/twitter-14.jpg" alt="Twitter" /></a>
+			<a class="navimglink" href="http://mstdn.io/@jasonrbriggs"><img src="/resources/mastodon.png" alt="Mastodon" /></a>
+			<a class="navimglink" href="http://github.com/jasonrbriggs"><img src="/resources/github-15.png" alt="Github" /></a>
+			<a class="navimglink" href="http://www.goodreads.com/author/show/7052551.Jason_R_Briggs"><img src="/resources/goodreads-15.png" alt="Good Reads" /></a>
+			<a class="navimglink" href="/tags/"><img src="/resources/tag-15.jpg" alt="Tag cloud" /></a>
+			</div>
+			<div id="searchspan" style="display:none"><form id="searchform" action="/api/search" method="get"><input type="text" value="" name="text" onkeypress="return checkSubmit(this, event)" /></form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="contentcontainer">
+
+	<div class="main">
+		<div id="pageheader">
+			<img class="pageheaderimg" alt="banner image" src="/resources/pfk-banner.jpg" />
+		</div>
+	
+		<div class="content">
+			<div class="title">
+				<h1>Python for Kids</h1>
+				<h2>Project Suggestion #1 - Lunar Lander</h2>
+			</div>
+	
+			<div class="postmeta">
+				<a href="/python-for-kids/puzzles/project1-lander.html"><img class="nofloat" src="/resources/link13.png" /> Permalink</a> <a href="https://twitter.com/share?url=http%3A//jasonrbriggs.com/python-for-kids/puzzles/project1-lander.html&via=jason_r_briggs"><img class="nofloat" src="/resources/twitter-14.jpg" /> Twitter</a> 
+			</div>
+	
+			<div class="post"><h1>Project Suggestion #1 </h1>
+
+<h2 id="Lunar-Lander">Lunar Lander</h2>
+
+<p><em>Posted, 11 Mar 2013</em></p>
+
+<p>Difficulty: medium - hard</p>
+
+<p><a href="http://en.wikipedia.org/wiki/Lunar_Lander_(arcade_game)">Lunar Lander</a> was a <a href="http://en.wikipedia.org/wiki/Vector_graphics">vector</a>-based arcade game released in the 1970s, where you controlled a spacecraft landing on the lunar surface. You could rotate your craft, and then activate your engines to move to the left or right, and to control the speed of your descent. Land too hard and your spacecraft exploded, land on a smaller platform and you got a higher score. Take too long to land and you run out of fuel and drop like a stone (you can find a version of Lunar Lander on the Atari <a href="http://www.atari.com/arcade/lunar_lander">website</a> if you want to try it out for yourself).</p>
+
+<p><img src="lunar-lander.png" alt="lunar lander" /> <br />
+(Image courtesy <a href="http://en.wikipedia.org/wiki/File:Lunar_Lander.png">Wikipedia</a>)</p>
+
+<p>We're not going to try anything quite that ambitious, but we can certainly create a simple version of the lander. Our version of the game will have a downward facing engine that turns on when the player hits the down arrow (and turns off when they hit the key again). A left thruster which fires when they press the left arrow key, and a right thruster which fires when they press the right arrow. The lander will fall from the centre of the screen and the player will try to land on a small platform without hitting it too hard. </p>
+
+<p>You don't have to spend too much time making it look good - at least to start with, try playing with a simple square for the lander, a rectangle for the platform, and use text to display whether the engine or the thrusters are firing, and for the fuel level. Chapters 12, 13 and 14 in the <a href="/python-for-kids/">book</a> will probably help you get started.</p>
+
+<p><img src="lunar-lander-wip.png" alt="lunar lander work in progress" /></p>
+
+<p>Once you get the basic game working, there's all sorts of things you can do to tidy it up and make it look good. </p>
+
+<p><em>Update: you can find part of the solution <a href="/python-for-kids/puzzles/project1-lander-solution.html">here</a>.</em></p>
+</div>
+		</div>
+	</div>
+	
+</div>
+
+<div>
+<script type="text/javascript">
+$('[href*="png"]').attr('rel', 'lightbox');
+$('[href*="jpg"]').attr('rel', 'lightbox');
+</script>
+<script type="text/javascript" src="/resources/utils.v2.js"></script>
+<script type="text/javascript" src="/resources/lightbox.v2.51.js"></script>
+</div>
+</body>
+</html>

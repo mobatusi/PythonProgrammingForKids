@@ -1,0 +1,17 @@
+plugins: menu
+title: Python for Kids
+sub-title: Puzzle Number 6
+banner-image: resources/pfk-banner.jpg
+
+
+_Posted, 6 Mar 2013_
+
+Difficulty: medium - hard
+
+Depending upon what year you are at school, you may (or may not) have heard of the [Fibonacci Series](http://en.wikipedia.org/wiki/Fibonacci_number). Fibonacci is a series of numbers starting with 0 and 1, and you find the next number in the series by adding the previous two numbers. So after 0 and 1, is 1 (0 + 1), then 2 (1 + 1), and then 3, and so on. Here's a few more numbers in the series:
+
+> 0, 1, 1, 2, 3, 5, 8, 13, 21, 34
+
+Try creating a Python function which will tell you the _n_th number in the Fibonacci Series (the _5_th, the _10_th or the _200_th, for example).
+
+_Update: The full solution can be found [here](puzzle6-solution.html)._

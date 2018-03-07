@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<title>Python for Kids</title>
+<meta name="generator" content="SiteBaker v1.8.5" />
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+<meta content="utf-8" http-equiv="encoding" />
+<meta name="viewport" content="width=device-width" />
+<link rel="stylesheet" href="/theme/main.v19.css" type="text/css" media="screen"></link>
+<link rel="stylesheet" href="/resources/highlight.v1.css" type="text/css" media="screen"></link>
+<link href="/resources/lightbox.v2.51.css" rel="stylesheet" />
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/resources/jquery-1.8.3.min.js"></script>
+</head>
+<body>
+<div id="header">
+	<div id="logo">
+		<img src="/resources/jasonrbriggs.png" alt="Site logo" />
+	</div>
+	<div id="nav">
+	<ul class="drop">
+    	<li><img src="/resources/dropdown-menu.png" alt="dropdown menu button" />
+	    <ul>
+			<li><a class="navlink" href="/journal">JOURNAL</a></li>
+			<li><a class="navlink" href="/python-for-kids">PYTHON FOR KIDS</a></li>
+			<li><a class="navlink" href="/bio.html">BIO</a></li>
+			<li><a class="navlink" href="/contact.html">CONTACT</a></li>
+		</ul>
+		</li>
+	</ul>
+	</div>
+	<div>
+		<div class="navicons">
+			<a class="navimglink" onclick="javascript:return searchToggle()"><img src="/resources/search-15.png" alt="Search" /></a>
+			<div id="nonsearchspan">
+			<a class="navimglink" href="/journal/feed.xml"><img src="/resources/rss-15.png" alt="RSS feed" /></a>
+			<a class="navimglink" href="http://twitter.com/jason_r_briggs"><img src="/resources/twitter-14.jpg" alt="Twitter" /></a>
+			<a class="navimglink" href="http://mstdn.io/@jasonrbriggs"><img src="/resources/mastodon.png" alt="Mastodon" /></a>
+			<a class="navimglink" href="http://github.com/jasonrbriggs"><img src="/resources/github-15.png" alt="Github" /></a>
+			<a class="navimglink" href="http://www.goodreads.com/author/show/7052551.Jason_R_Briggs"><img src="/resources/goodreads-15.png" alt="Good Reads" /></a>
+			<a class="navimglink" href="/tags/"><img src="/resources/tag-15.jpg" alt="Tag cloud" /></a>
+			</div>
+			<div id="searchspan" style="display:none"><form id="searchform" action="/api/search" method="get"><input type="text" value="" name="text" onkeypress="return checkSubmit(this, event)" /></form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="contentcontainer">
+
+	<div class="main">
+		<div id="pageheader">
+			<img class="pageheaderimg" alt="banner image" src="/resources/pfk-banner.jpg" />
+		</div>
+	
+		<div class="content">
+			<div class="title">
+				<h1>Python for Kids</h1>
+				<h2>Puzzle Number 3 (Solution)</h2>
+			</div>
+	
+			<div class="postmeta">
+				<a href="/python-for-kids/puzzles/puzzle3-solution.html"><img class="nofloat" src="/resources/link13.png" /> Permalink</a> <a href="https://twitter.com/share?url=http%3A//jasonrbriggs.com/python-for-kids/puzzles/puzzle3-solution.html&via=jason_r_briggs"><img class="nofloat" src="/resources/twitter-14.jpg" /> Twitter</a> 
+			</div>
+	
+			<div class="post"><p><em>Posted, 25 Jan 2013</em></p>
+
+<p>This code is hopefully pretty straightforward to figure out, however if you don't set the speed of the turtle, you'll be waiting ages for it to draw:</p>
+
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">turtle</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">turtle</span><span class="o">.</span><span class="n">Pen</span><span class="p">()</span>
+<span class="n">t</span><span class="o">.</span><span class="n">speed</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</code></pre></div>
+
+<p>To draw the square spiral, we just loop 500 times and store the increasing number of the loop (0, 1, 2, 3, 4, 5, ...) in the variable <code>x</code>. For each loop, the turtle moves forward the number of pixels in <code>x</code> and then turns right 90 degrees (so move forward, turn right, move forward a bit more, turn right, and so on).</p>
+
+<div class="codehilite"><pre><span></span><code><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">500</span><span class="p">):</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">right</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+</code></pre></div>
+
+<p>You can download the full code <a href="puzzle3-solution.py.txt">here</a>.</p>
+</div>
+		</div>
+	</div>
+	
+</div>
+
+<div>
+<script type="text/javascript">
+$('[href*="png"]').attr('rel', 'lightbox');
+$('[href*="jpg"]').attr('rel', 'lightbox');
+</script>
+<script type="text/javascript" src="/resources/utils.v2.js"></script>
+<script type="text/javascript" src="/resources/lightbox.v2.51.js"></script>
+</div>
+</body>
+</html>

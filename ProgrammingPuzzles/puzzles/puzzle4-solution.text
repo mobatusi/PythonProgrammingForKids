@@ -1,0 +1,296 @@
+plugins: menu
+title: Python for Kids
+sub-title: Puzzle Number 4 (Solution)
+banner-image: resources/pfk-banner.jpg
+
+
+_Posted, 19 Feb 2013_
+
+The solution to this might seem straightforward if you take the code for the moving platforms puzzle from Chapter 18. We simply modify the MovingPlatform so that it moves vertically, rather than horizontally, right? 
+
+The MovingPlatform class currently looks like this:
+
+```python
+class MovingPlatformSprite(PlatformSprite):
+    def __init__(self, game, photo_image, x, y, width, height):
+        PlatformSprite.__init__(self, game, photo_image, x, y, width, height)
+        self.x = 2
+        self.counter = 0
+        self.last_time = time.time()
+        self.width = width
+        self.height = height
+    def coords(self):
+        xy = list(self.game.canvas.coords(self.image))
+        self.coordinates.x1 = xy[0]
+        self.coordinates.y1 = xy[1]
+        self.coordinates.x2 = xy[0] + self.width
+        self.coordinates.y2 = xy[1] + self.height
+        return self.coordinates
+    def move(self):
+        if time.time() - self.last_time > 0.03:
+            self.last_time = time.time()        
+            self.game.canvas.move(self.image, self.x, 0)
+            self.counter += 1
+            if self.counter > 20:
+                self.x *= -1
+                self.counter = 0
+```
+
+So we could just copy this class and change the x variable to a y variable like so:
+
+```python
+class VMovingPlatformSprite(PlatformSprite):
+    ###
+    def __init__(self, game, photo_image, x, y, width, height):
+        PlatformSprite.__init__(self, game, photo_image, x, y, width, height)###
+        self.y = 2
+        ###
+        self.counter = 0
+        self.last_time = time.time()
+        self.width = width
+        self.height = height
+    def coords(self):
+        xy = list(self.game.canvas.coords(self.image))
+        self.coordinates.x1 = xy[0]
+        self.coordinates.y1 = xy[1]
+        self.coordinates.x2 = xy[0] + self.width
+        self.coordinates.y2 = xy[1] + self.height
+        return self.coordinates
+    def move(self):
+        if time.time() - self.last_time > 0.03:
+            self.last_time = time.time()###
+            self.game.canvas.move(self.image, 0, self.y)
+            ###
+            self.counter += 1
+            if self.counter > 20:###
+                self.y *= -1
+                ###
+                self.counter = 0###
+```
+
+Note we've also changed the `move` function to use `0, self.y`, rather than `self.x, 0` in the code above.
+
+Let's also change platform5 to be a VMovingPlatformSprite:
+
+```python
+platform5 = VMovingPlatformSprite(g, PhotoImage(file="platform2.gif"), \
+    175, 350, 66, 10)
+```
+
+The problem is, if you try running the code now, the platform moves up and down, but the stick figure falls through when you jump on it.
+
+So what's going wrong?
+
+Simply put, our collision detection isn't designed for two vertically moving objects. We need to change the StickFigureSprite class so that it starts moving at the same speed as the platform as soon as it touches, and we need a way for it to tell whether another sprite is moving. 
+
+The first change is to the Sprite class, adding the object variable `y`. This is used when the stick figure collides with any sprite, so it can tell whether or not the sprite is moving (vertically). Remember that with parent classes and child classes, the child _inherits_ the variables of the parent (make sure you read Chapter 8 if that doesn't make a lot of sense to you):
+
+```python
+###
+class Sprite:
+    def __init__(self, game):
+        self.game = game
+        self.endgame = False
+        self.coordinates = None###
+        self.y = 0
+    ###
+    def move(self):
+        pass
+    def coords(self):
+        return self.coordinates###
+```
+
+The next change is to the new VMovingPlatformSprite class. We add another object variable here called `old_y`, which we'll use in the `move` function. When we move the platform (which is every 0.03 of a second), we replace the value of `y` with the value of `old_y`, we then move the platform (vertically) the number of pixels specified by `y`. If the `move` function has been called and 0.03 seconds hasn't elapsed, then we set the `y` variable back to 0. 
+
+Why are we doing this? So that the stick figure can also use the `y` variable, which we'll see in the next code snippet. The `y` variable will always contain a value which shows how far the platform is moving (it will be either 2 or -2, or 0).
+
+```python
+###
+class VMovingPlatformSprite(PlatformSprite):
+    def __init__(self, game, photo_image, x, y, width, height):
+        PlatformSprite.__init__(self, game, photo_image, x, y, width, height)
+        self.y = 2###
+        self.old_y = 2
+        ###
+        self.counter = 0
+        self.last_time = time.time()
+        self.width = width
+        self.height = height
+    def coords(self):
+        xy = list(self.game.canvas.coords(self.image))
+        self.coordinates.x1 = xy[0]
+        self.coordinates.y1 = xy[1]
+        self.coordinates.x2 = xy[0] + self.width
+        self.coordinates.y2 = xy[1] + self.height
+        return self.coordinates
+    def move(self):
+        if time.time() - self.last_time > 0.03:###
+            self.y = self.old_y
+            ###
+            self.last_time = time.time()        
+            self.game.canvas.move(self.image, 0, self.y)
+            self.counter += 1
+            if self.counter > 20:
+                self.y *= -1###
+                self.old_y = self.y
+                ###
+                self.counter = 0###
+        else:
+            self.y = 0
+```
+
+There are a number of changes to the StickFigureSprite class. The first is to add new object variables. At the moment, we determine whether the stick figure is jumping by looking at the value of the `y` variable - once the figure starts moving with an elevator, we can't use that variable any more. So we add a new variable `jumping`, which will tell us when the figure is jumping (and not standing on another moving platform). The second new variable is `follow_platform`. This will be used to 'hold' the platform when the figure lands on it (this is a bit like saying: "hey Stick Figure, remember this platform, as we will be following its movement"):
+
+```python
+###
+class StickFigureSprite(Sprite):
+    def __init__(self, game):
+        Sprite.__init__(self, game)
+        self.images_left = [
+            PhotoImage(file="figure-L1.gif"),
+            PhotoImage(file="figure-L2.gif"),
+            PhotoImage(file="figure-L3.gif")
+        ]
+        self.images_right = [
+            PhotoImage(file="figure-R1.gif"),
+            PhotoImage(file="figure-R2.gif"),
+            PhotoImage(file="figure-R3.gif")
+        ]
+        self.image = game.canvas.create_image(200, 470, image=self.images_left[0], anchor='nw')
+        self.x = -2
+        self.y = 0
+        self.current_image = 0
+        self.current_image_add = 1
+        self.last_time = time.time()
+        self.jump_count = 0###
+        self.jumping = False
+        self.follow_platform = None
+```
+
+Next we need to change the `left`, `right`, and `jump` functions, to use the new `jumping` variable:
+
+```python
+    ###
+    def turn_left(self, evt):###
+        if self.jumping == False:
+            ###
+            self.x = -2
+    def turn_right(self, evt):###
+        if self.jumping == False:
+            ###
+            self.x = 2
+    def jump(self, evt):###
+        if self.jumping == False:
+            ###
+            self.y = -4
+            self.jump_count = 0###
+            self.jumping = True
+            self.follow_platform = None
+```
+
+And the same change is needed in the `animate` function, which also needs to know when the figure is jumping, so it can display the correct image:
+
+```python
+    ###
+    def animate(self):
+        if self.x != 0 and self.y == 0:
+            if time.time() - self.last_time > 0.1:
+                self.last_time = time.time()
+                self.current_image += self.current_image_add
+                if self.current_image >= 2:
+                    self.current_image_add = -1
+                if self.current_image <= 0:
+                    self.current_image_add = 1
+        if self.x < 0:###
+            if self.jumping == True:
+                ###
+                self.game.canvas.itemconfig(self.image, image=self.images_left[2])
+            else:
+                self.game.canvas.itemconfig(self.image, image=self.images_left[self.current_image])
+        elif self.x > 0:###
+            if self.jumping == True:
+                ###
+                self.game.canvas.itemconfig(self.image, image=self.images_right[2])
+            else:
+                self.game.canvas.itemconfig(self.image, image=self.images_right[self.current_image])###
+```
+
+Lots of changes are required to the `move` function. The first is to also check the value of the `jumping` variable before we make any changes to the `jump_count`:
+
+```python
+    ###
+    def move(self):
+        self.animate()###
+        if self.jumping == True:
+            ###
+            if self.y < 0:
+                self.jump_count += 1
+                if self.jump_count > 20:
+                    self.y = 4
+            if self.y > 0:
+                self.jump_count -= 1###
+```
+
+Further down in this function, we set the `jumping` variable to False whenever we set the `y` variable to 0.  In an earlier version of the code, we used the `y` variable to tell if the figure was jumping (if the value is less than or greater than 0 then the figure is jumping up or down) - now we use the `jumping` variable. When `y` is 0, `jumping` should be set to False:
+
+```python
+        ###
+        if self.y > 0 and co.y2 >= self.game.canvas_height:
+            self.y = 0###
+            self.jumping = False
+            ###
+            bottom = False
+        elif self.y < 0 and co.y1 <= 0:
+            self.y = 0###
+            self.jumping = False
+            ###
+            top = False###
+```
+
+We also need to add a new collision check. If the stick figure has landed on the elevator, then we need to keep checking whether he has walked off the edge. The _else_ part of this statement, is used when the figure is still standing on the platform. If he is, there's no point in doing any further collision detection, so we set the `bottom`, `left` and `right` variables to False:
+
+```python        
+        if self.follow_platform is not None:
+            if not collided_bottom(5, co, self.follow_platform.coords()):
+                self.follow_platform = None
+                self.y = 0
+            else:
+                self.y = self.follow_platform.y
+                bottom = False
+                left = False
+                right = False
+```
+
+The final changes are to the loop at the bottom of this function. We loop through all the sprites in the game to see if the figure has collided with any of them. We add a new if-statement which says: "if we still need to check collisions at the bottom of the figure, **and** we have collided at the bottom with the sprite, **and** that sprite is moving vertically (`sprite.y != 0`), then we should start following that sprite (`self.follow_platform = sprite`), we should set the stick figure's `y` variable to the same value as the sprite (`self.y = sprite.y - 1` -- with a slight offset), and finally we should stop all further collision detection in this loop".
+
+```python
+        ###
+        for sprite in self.game.sprites:
+            if sprite == self:
+                continue
+            sprite_co = sprite.coords()
+            if top and self.y < 0 and collided_top(co, sprite_co):
+                self.y = -self.y
+                top = False###
+            if bottom and collided_bottom(self.y, co, sprite_co) and sprite.y != 0:
+                self.follow_platform = sprite
+                self.y = sprite.y - 1
+                self.jumping = False
+                falling = False
+                bottom = False
+                top = False
+            ###
+            if bottom and self.y > 0 and collided_bottom(self.y, co, sprite_co):
+                self.y = sprite_co.y1 - co.y2
+                if self.y < 0:
+                    self.y = 0###
+                self.jumping = False
+                ###
+                falling = False
+                bottom = False
+                top = False###
+```
+
+Okay, so you can probably see that the changes required to add elevators isn't straightforward at all. If you managed to get this working on your own, well done. If you're struggling to understand this code, break it down into smaller parts. First change the original code so that rather than using the `y` variable to tell when the figure is jumping, use the new `jumping` variable. Try that out so you know it works. Then add the elevator and don't worry when the stick figure falls through. Then try making the changes so that the stick figure follows the movement of the platform. Each time you make a small change, keep a copy of your previous version so you can always go back if something goes seriously wrong.
+
+You can download the full code [here](puzzle4-solution.py.txt).

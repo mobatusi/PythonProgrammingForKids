@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<title>Python for Kids</title>
+<meta name="generator" content="SiteBaker v1.8.5" />
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+<meta content="utf-8" http-equiv="encoding" />
+<meta name="viewport" content="width=device-width" />
+<link rel="stylesheet" href="/theme/main.v19.css" type="text/css" media="screen"></link>
+<link rel="stylesheet" href="/resources/highlight.v1.css" type="text/css" media="screen"></link>
+<link href="/resources/lightbox.v2.51.css" rel="stylesheet" />
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/resources/jquery-1.8.3.min.js"></script>
+</head>
+<body>
+<div id="header">
+	<div id="logo">
+		<img src="/resources/jasonrbriggs.png" alt="Site logo" />
+	</div>
+	<div id="nav">
+	<ul class="drop">
+    	<li><img src="/resources/dropdown-menu.png" alt="dropdown menu button" />
+	    <ul>
+			<li><a class="navlink" href="/journal">JOURNAL</a></li>
+			<li><a class="navlink" href="/python-for-kids">PYTHON FOR KIDS</a></li>
+			<li><a class="navlink" href="/bio.html">BIO</a></li>
+			<li><a class="navlink" href="/contact.html">CONTACT</a></li>
+		</ul>
+		</li>
+	</ul>
+	</div>
+	<div>
+		<div class="navicons">
+			<a class="navimglink" onclick="javascript:return searchToggle()"><img src="/resources/search-15.png" alt="Search" /></a>
+			<div id="nonsearchspan">
+			<a class="navimglink" href="/journal/feed.xml"><img src="/resources/rss-15.png" alt="RSS feed" /></a>
+			<a class="navimglink" href="http://twitter.com/jason_r_briggs"><img src="/resources/twitter-14.jpg" alt="Twitter" /></a>
+			<a class="navimglink" href="http://mstdn.io/@jasonrbriggs"><img src="/resources/mastodon.png" alt="Mastodon" /></a>
+			<a class="navimglink" href="http://github.com/jasonrbriggs"><img src="/resources/github-15.png" alt="Github" /></a>
+			<a class="navimglink" href="http://www.goodreads.com/author/show/7052551.Jason_R_Briggs"><img src="/resources/goodreads-15.png" alt="Good Reads" /></a>
+			<a class="navimglink" href="/tags/"><img src="/resources/tag-15.jpg" alt="Tag cloud" /></a>
+			</div>
+			<div id="searchspan" style="display:none"><form id="searchform" action="/api/search" method="get"><input type="text" value="" name="text" onkeypress="return checkSubmit(this, event)" /></form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="contentcontainer">
+
+	<div class="main">
+		<div id="pageheader">
+			<img class="pageheaderimg" alt="banner image" src="/resources/pfk-banner.jpg" />
+		</div>
+	
+		<div class="content">
+			<div class="title">
+				<h1>Python for Kids</h1>
+				<h2>Puzzle Number 6 (Solution)</h2>
+			</div>
+	
+			<div class="postmeta">
+				<a href="/python-for-kids/puzzles/puzzle6-solution.html"><img class="nofloat" src="/resources/link13.png" /> Permalink</a> <a href="https://twitter.com/share?url=http%3A//jasonrbriggs.com/python-for-kids/puzzles/puzzle6-solution.html&via=jason_r_briggs"><img class="nofloat" src="/resources/twitter-14.jpg" /> Twitter</a> 
+			</div>
+	
+			<div class="post"><p><em>Posted, 14 Apr 2013</em></p>
+
+<p>Each number in the fibonacci series is calculated by adding the previous two numbers. So to find a particular number we need to work out all the previous numbers in the series, starting with 0 and 1.</p>
+
+<p>Let's start with the definition of our function, which has a single parameter 'n':</p>
+
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">pass</span>
+</code></pre></div>
+
+<p>There's no point in adding anything for the first two numbers in the series, so we can create an if-statement and return 0 or 1 depending on the value of the parameter:</p>
+
+<div class="codehilite"><pre><span></span><code><span class="c1">###</span>
+<span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span><span class="c1">###</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+</code></pre></div>
+
+<p>Finally we need to loop through and calculate each number. If we have two variables <code>a</code> and <code>b</code> with values 0 and 1, we can create a loop that loops to the value of parameter <code>n</code>. Each time we loop, we add <code>a</code> and <code>b</code> to get the next value in the series. We then set our <code>a</code> variable to the value of <code>b</code> and <code>b</code> gets the value of <code>c</code>. Once we've completed all the loops, we return the value in <code>c</code>.</p>
+
+<div class="codehilite"><pre><span></span><code><span class="c1">###</span>
+<span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="c1">###</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">b</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="n">c</span>
+        <span class="k">return</span> <span class="n">c</span>
+</code></pre></div>
+
+<p>Let's look at an example of how the loop works, which might help explain the logic. </p>
+
+<p>If we called the function with the number 3 (this effectively means we want to calculate the 4th number in the series), the first time we loop (x would be 1), we calculate <code>c</code> by adding 0 and 1 (which makes 1 rather obviously). The new value of <code>a</code> then becomes 1 and <code>b</code> becomes 1. </p>
+
+<p>We loop again (x is now 2), and the value of <code>c</code> is calculated as 2. So the new value of <code>a</code> is 1, and the new value of <code>b</code> is 2. </p>
+
+<p>The final loop (x is now 3 which equals the value of <code>n</code>), we calculate <code>c</code> as 3. We still set the value of the <code>a</code> and <code>b</code> variables (even though we don't need these values any more), but the loop then ends and we return the value of <code>c</code>.</p>
+
+<p>We can try our code with some later numbers in the fibonacci series. </p>
+
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">fib</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+<span class="mi">832040</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fib</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="mi">12586269025</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fib</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="mi">354224848179261915075</span>
+</code></pre></div>
+
+<p>One final note: this isn't the only way to calculate numbers in the fibonacci series. There's a more advanced style of writing functions called <a href="http://en.wikipedia.org/wiki/Recursion">recursion</a> - which is a way for a function to calculate part of a value, and then to call itself again to calculate the next part of the value. Here's just one example of rewriting our <code>fib</code> function, using recursion:</p>
+
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Using recursion can result in simpler, and sometimes, more elegant code... but it can also be more difficult to understand.</p>
+</div>
+		</div>
+	</div>
+	
+</div>
+
+<div>
+<script type="text/javascript">
+$('[href*="png"]').attr('rel', 'lightbox');
+$('[href*="jpg"]').attr('rel', 'lightbox');
+</script>
+<script type="text/javascript" src="/resources/utils.v2.js"></script>
+<script type="text/javascript" src="/resources/lightbox.v2.51.js"></script>
+</div>
+</body>
+</html>

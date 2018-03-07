@@ -1,0 +1,20 @@
+plugins: menu
+title: Python for Kids
+sub-title: Puzzle Number 8
+shadow: erase
+banner-image: resources/pfk-banner.jpg
+
+
+_Posted, 28 Oct 2013_
+
+Difficulty: medium
+
+In the [previous puzzle](puzzle7.html), we created a simple drawing program. When you click on the canvas and drag the mouse the program draws a line.
+
+This time, we'll take our drawing program and change it so that it first draws a line, but if you press any key it starts to erase. When you hit a key again, it draws again (and so on)
+
+_Hint: you might find the binding "&lt;Key&gt;" useful in your program._
+
+![erase](/python-for-kids/puzzles/puzzle8-erase.png)
+
+_Check back in a few weeks for the solution._

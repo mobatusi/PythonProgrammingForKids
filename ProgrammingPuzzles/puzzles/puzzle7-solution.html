@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<title>Python for Kids</title>
+<meta name="generator" content="SiteBaker v1.8.5" />
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+<meta content="utf-8" http-equiv="encoding" />
+<meta name="viewport" content="width=device-width" />
+<link rel="stylesheet" href="/theme/main.v19.css" type="text/css" media="screen"></link>
+<link rel="stylesheet" href="/resources/highlight.v1.css" type="text/css" media="screen"></link>
+<link href="/resources/lightbox.v2.51.css" rel="stylesheet" />
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/resources/jquery-1.8.3.min.js"></script>
+</head>
+<body>
+<div id="header">
+	<div id="logo">
+		<img src="/resources/jasonrbriggs.png" alt="Site logo" />
+	</div>
+	<div id="nav">
+	<ul class="drop">
+    	<li><img src="/resources/dropdown-menu.png" alt="dropdown menu button" />
+	    <ul>
+			<li><a class="navlink" href="/journal">JOURNAL</a></li>
+			<li><a class="navlink" href="/python-for-kids">PYTHON FOR KIDS</a></li>
+			<li><a class="navlink" href="/bio.html">BIO</a></li>
+			<li><a class="navlink" href="/contact.html">CONTACT</a></li>
+		</ul>
+		</li>
+	</ul>
+	</div>
+	<div>
+		<div class="navicons">
+			<a class="navimglink" onclick="javascript:return searchToggle()"><img src="/resources/search-15.png" alt="Search" /></a>
+			<div id="nonsearchspan">
+			<a class="navimglink" href="/journal/feed.xml"><img src="/resources/rss-15.png" alt="RSS feed" /></a>
+			<a class="navimglink" href="http://twitter.com/jason_r_briggs"><img src="/resources/twitter-14.jpg" alt="Twitter" /></a>
+			<a class="navimglink" href="http://mstdn.io/@jasonrbriggs"><img src="/resources/mastodon.png" alt="Mastodon" /></a>
+			<a class="navimglink" href="http://github.com/jasonrbriggs"><img src="/resources/github-15.png" alt="Github" /></a>
+			<a class="navimglink" href="http://www.goodreads.com/author/show/7052551.Jason_R_Briggs"><img src="/resources/goodreads-15.png" alt="Good Reads" /></a>
+			<a class="navimglink" href="/tags/"><img src="/resources/tag-15.jpg" alt="Tag cloud" /></a>
+			</div>
+			<div id="searchspan" style="display:none"><form id="searchform" action="/api/search" method="get"><input type="text" value="" name="text" onkeypress="return checkSubmit(this, event)" /></form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="contentcontainer">
+
+	<div class="main">
+		<div id="pageheader">
+			<img class="pageheaderimg" alt="banner image" src="/resources/pfk-banner.jpg" />
+		</div>
+	
+		<div class="content">
+			<div class="title">
+				<h1>Python for Kids</h1>
+				<h2>Puzzle Number 7 (Solution)</h2>
+			</div>
+	
+			<div class="postmeta">
+				<a href="/python-for-kids/puzzles/puzzle7-solution.html"><img class="nofloat" src="/resources/link13.png" /> Permalink</a> <a href="https://twitter.com/share?url=http%3A//jasonrbriggs.com/python-for-kids/puzzles/puzzle7-solution.html&via=jason_r_briggs"><img class="nofloat" src="/resources/twitter-14.jpg" /> Twitter</a> 
+			</div>
+	
+			<div class="post"><p><em>Posted, 11 Jul 2013</em></p>
+
+<p>To create a simple drawing program we need to create functions when the mouse moves, to turn on drawing when the button is pressed and to turn off drawing when it's released. To start with, let's create a class called Paint:</p>
+
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">Paint</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tk</span> <span class="o">=</span> <span class="n">Tk</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">resizable</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">wm_attributes</span><span class="p">(</span><span class="s2">&quot;-topmost&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">Canvas</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tk</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">bd</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</code></pre></div>
+
+<p>So we create an object variable for Tk, and create a Canvas for drawing on. The <code>pack</code> function of the canvas and <code>update</code> function of tk we've used before.</p>
+
+<div class="codehilite"><pre><span></span><code>        <span class="c1">###</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">update</span><span class="p">()</span><span class="c1">###</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">bind_all</span><span class="p">(</span><span class="s2">&quot;&lt;Motion&gt;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">bind_all</span><span class="p">(</span><span class="s2">&quot;&lt;ButtonPress-1&gt;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_down</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">bind_all</span><span class="p">(</span><span class="s2">&quot;&lt;ButtonRelease-1&gt;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_up</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">None</span>
+</code></pre></div>
+
+<p>Next, we bind the Motion event to the function <code>move</code> (we haven't created that yet), then bind the ButtonPress and ButtonRelease events to functions <code>button_down</code> and <code>button_up</code>. The Motion event 'fires' every time someone moves the mouse - so the <code>move</code> function will be called every time the mouse moves (and you'll be able to grab the coordinates of the mouse pointer from the event object delivered to the function). We also create object variables <code>x</code> and <code>y</code>, which will be used to store the last position of the mouse (we'll see how these are used shortly).</p>
+
+<div class="codehilite"><pre><span></span><code>        <span class="c1">###</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">None</span><span class="c1">###</span>
+    <span class="k">def</span> <span class="nf">mainloop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">button_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span>
+    <span class="k">def</span> <span class="nf">button_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">None</span>
+</code></pre></div>
+
+<p>The <code>mainloop</code> function simply calls the <code>mainloop</code> function of the <code>tk</code> variable - this makes the canvas display, and anything we draw on it will appear. The <code>button_down</code> function records the position of the mouse while it's being pressed (so while you hold the button down, the variables <code>x</code> and <code>y</code> are always being updated wih the current mouse position). When the mouse button is released, the <code>button_up</code> function sets the <code>x</code> and <code>y</code> variables back to None (no value).</p>
+
+<div class="codehilite"><pre><span></span><code>        <span class="c1">###</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">None</span><span class="c1">###</span>
+    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_line</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">x</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span>
+</code></pre></div>
+
+<p>Finally, the <code>move</code> function checks whether the <code>x</code> and <code>y</code> variables have a value, and if they do, it calls the <code>create_line</code> function of the canvas to draw a line. Actually the line is just a dot - from the <code>x</code> and <code>y</code> object variables to the current position of the mouse (<code>event.x</code> and <code>event.y</code>).</p>
+
+<p>The last part of our program is to create an object of our <code>Paint</code> class, and then call the <code>mainloop</code> function to make things happen:</p>
+
+<div class="codehilite"><pre><span></span><code><span class="n">p</span> <span class="o">=</span> <span class="n">Paint</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre></div>
+
+<p>You can download the full code <a href="puzzle7-solution.py.txt">here</a>.</p>
+</div>
+		</div>
+	</div>
+	
+</div>
+
+<div>
+<script type="text/javascript">
+$('[href*="png"]').attr('rel', 'lightbox');
+$('[href*="jpg"]').attr('rel', 'lightbox');
+</script>
+<script type="text/javascript" src="/resources/utils.v2.js"></script>
+<script type="text/javascript" src="/resources/lightbox.v2.51.js"></script>
+</div>
+</body>
+</html>

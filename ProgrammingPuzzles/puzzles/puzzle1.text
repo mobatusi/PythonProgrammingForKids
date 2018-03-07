@@ -1,0 +1,20 @@
+plugins: menu
+title: Python for Kids
+sub-title: Puzzle Number 1
+shadow: Maze
+banner-image: resources/pfk-banner.jpg
+
+
+_Posted, 10 Nov 2012_
+
+Difficulty: easy - medium
+
+Download this file ([puzzle1.py](puzzle1.py.txt)) to your computer, and then start up IDLE. Open the file, by clicking on the File menu, clicking Open and choosing the location you saved the file. When you run the code (click on the Run menu, and choose Run Module), the turtle will draw a simple maze:
+
+![Maze](puzzle1-maze.png)
+
+Can you write a program to help the turtle navigate its way through the maze? Your code should be no more than 34 or 35 lines in length.
+
+If you need help, reading chapters 4, 6 and 11, in [Python for Kids](/python-for-kids/index.html), would be a good place to start.
+
+_Update: The full solution can be found [here](puzzle1-solution.py.txt)._

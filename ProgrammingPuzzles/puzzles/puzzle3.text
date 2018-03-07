@@ -1,0 +1,18 @@
+plugins: menu
+title: Python for Kids
+sub-title: Puzzle Number 3
+shadow: Spiral
+banner-image: resources/pfk-banner.jpg
+
+
+_Posted, 21 Jan 2013_
+
+Difficulty: easy - medium
+
+I feel a headache coming on, just looking at it, but try writing code to reproduce the following spiral using the turtle module (click on the image to take a closer look):
+
+[![Spiral](puzzle3-spiral-small.png)](puzzle3-spiral.png)
+
+Hint: Unless you want to wait forever, for the turtle to draw, you might want to speed it up by using the speed function (for example: `t.speed(20)`)
+
+_Update: The full solution can be found [here](puzzle3-solution.html)._

@@ -1,0 +1,62 @@
+plugins: menu
+title: Python for Kids
+sub-title: Puzzle Number 2 (Solution)
+banner-image: resources/pfk-banner.jpg
+
+
+_Posted, 21 Jan 2013_
+
+First of all we set up a couple of variables with the "encrypted" letters and the unencrypted letters:
+
+```python
+encrypted_letters = 'jklmnopqrstuvwxyzabcdefghi '
+unencrypted_letters = 'abcdefghijklmnopqrstuvwxyz '
+```
+
+So if you think about the two circles of letters, this is a bit like how we would line up one circle with another. 
+
+Next we create a couple of maps (or Python [dictionaries](http://docs.python.org/3.3/library/stdtypes.html#dict) to be exact). We use the `range` function to create a loop from 0 up to the length of the `encrypted_letters` string (which is 27). Each time we loop, we grab one letter from the `encrypted_letters` variable and one letter from the `unencrypted_letters` variable. Those are the values we use to populate our two maps:
+
+```python
+decrypt_map = { }
+encrypt_map = { }
+for x in range(len(encrypted_letters)):
+    encrypted_letter = encrypted_letters[x]
+    unencrypted_letter = unencrypted_letters[x]
+    decrypt_map[unencrypted_letter] = encrypted_letter
+    encrypt_map[encrypted_letter] = unencrypted_letter
+```
+
+At the end of the loop we have two maps where you can look up a decrypted letter and find the encrypted version, or look up an encrypted letter and find the decrypted version. Here's what the decrypt_map looks like at the end of this loop:
+
+```python
+{' ': ' ', 'a': 'j', 'c': 'l', 'b': 'k', 'e': 'n', 'd': 'm', 'g': 'p', 'f': 'o', 
+'i': 'r', 'h': 'q', 'k': 't', 'j': 's', 'm': 'v', 'l': 'u', 'o': 'x', 'n': 'w', 
+'q': 'z', 'p': 'y', 's': 'b', 'r': 'a', 'u': 'd', 't': 'c', 'w': 'f', 'v': 'e', 
+'y': 'h', 'x': 'g', 'z': 'i'}
+```
+
+(If you remember from Chapter 3 of the book, the first string is the key, followed by a colon (:) followed by the value for that key).
+
+Now we've created our variables, we can create functions for encrypting and decrypting some text. They're both almost exactly the same: for each letter in the variable `text` (`for l in text`) we append the corresponding letter from the decrypt or encrypt map to a list (a variable named `rtn`):
+
+```python
+def decrypt(text):
+    rtn = [ ]
+    for l in text:
+        rtn.append(decrypt_map[l])
+    return ''.join(rtn)
+def encrypt(text):
+    rtn = [ ]
+    for l in text:
+        rtn.append(encrypt_map[l])
+    return ''.join(rtn)
+```
+
+Finally we can decrypt and print the text:
+
+```python
+print(decrypt('nyve r tcftb zj jkzcc ylexip zk xfvj srtb wfli jvtfeuj'))
+```
+
+You can download the full code [here](puzzle2-solution.py.txt).

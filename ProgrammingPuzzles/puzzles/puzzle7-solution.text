@@ -1,0 +1,75 @@
+plugins: menu
+title: Python for Kids
+sub-title: Puzzle Number 7 (Solution)
+banner-image: resources/pfk-banner.jpg
+
+
+_Posted, 11 Jul 2013_
+
+To create a simple drawing program we need to create functions when the mouse moves, to turn on drawing when the button is pressed and to turn off drawing when it's released. To start with, let's create a class called Paint:
+
+```python
+
+from tkinter import *
+
+class Paint(object):
+    def __init__(self):
+        self.tk = Tk()
+        self.tk.resizable(0, 0)
+        self.tk.wm_attributes("-topmost", 1)
+        self.canvas = Canvas(self.tk, width=500, height=500, bd=0, highlightthickness=0)
+        self.canvas.pack()
+        self.tk.update()
+```
+
+So we create an object variable for Tk, and create a Canvas for drawing on. The `pack` function of the canvas and `update` function of tk we've used before.
+
+```python
+        ###
+        self.tk.update()###
+        self.canvas.bind_all("<Motion>", self.move)
+        self.canvas.bind_all("<ButtonPress-1>", self.button_down)
+        self.canvas.bind_all("<ButtonRelease-1>", self.button_up)
+        self.x = None
+        self.y = None
+```
+
+Next, we bind the Motion event to the function `move` (we haven't created that yet), then bind the ButtonPress and ButtonRelease events to functions `button_down` and `button_up`. The Motion event 'fires' every time someone moves the mouse - so the `move` function will be called every time the mouse moves (and you'll be able to grab the coordinates of the mouse pointer from the event object delivered to the function). We also create object variables `x` and `y`, which will be used to store the last position of the mouse (we'll see how these are used shortly).
+
+```python
+        ###
+        self.x = None
+        self.y = None###
+    def mainloop(self):
+        self.tk.mainloop()
+    def button_down(self, event):
+        self.x = event.x
+        self.y = event.y
+    def button_up(self, event):
+        self.x = None
+        self.y = None
+```
+
+The `mainloop` function simply calls the `mainloop` function of the `tk` variable - this makes the canvas display, and anything we draw on it will appear. The `button_down` function records the position of the mouse while it's being pressed (so while you hold the button down, the variables `x` and `y` are always being updated wih the current mouse position). When the mouse button is released, the `button_up` function sets the `x` and `y` variables back to None (no value).
+
+```python
+        ###
+        self.x = None
+        self.y = None###
+    def move(self, event):
+        if self.x is not None and self.y is not None:
+            self.canvas.create_line(self.x, self.y, event.x, event.y)
+            self.x = event.x
+            self.y = event.y
+```
+
+Finally, the `move` function checks whether the `x` and `y` variables have a value, and if they do, it calls the `create_line` function of the canvas to draw a line. Actually the line is just a dot - from the `x` and `y` object variables to the current position of the mouse (`event.x` and `event.y`).
+
+The last part of our program is to create an object of our `Paint` class, and then call the `mainloop` function to make things happen:
+
+```python
+p = Paint()
+p.mainloop()
+```
+
+You can download the full code [here](puzzle7-solution.py.txt).

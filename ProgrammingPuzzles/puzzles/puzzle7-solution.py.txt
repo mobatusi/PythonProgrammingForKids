@@ -1,0 +1,37 @@
+from tkinter import *
+
+class Paint(object):
+    def __init__(self):
+        self.tk = Tk()
+        self.tk.resizable(0, 0)
+        self.tk.wm_attributes("-topmost", 1)
+
+        self.canvas = Canvas(self.tk, width=500, height=500, bd=0, highlightthickness=0)
+        self.canvas.pack()
+        self.tk.update()
+        
+        self.canvas.bind_all("<Motion>", self.move)
+        self.canvas.bind_all("<ButtonPress-1>", self.button_down)
+        self.canvas.bind_all("<ButtonRelease-1>", self.button_up)
+        self.x = None
+        self.y = None
+
+    def mainloop(self):
+        self.tk.mainloop()
+        
+    def button_down(self, event):
+        self.x = event.x
+        self.y = event.y
+        
+    def button_up(self, event):
+        self.x = None
+        self.y = None
+        
+    def move(self, event):
+        if self.x is not None and self.y is not None:
+            self.canvas.create_line(self.x, self.y, event.x, event.y)
+            self.x = event.x
+            self.y = event.y
+
+p = Paint()
+p.mainloop()

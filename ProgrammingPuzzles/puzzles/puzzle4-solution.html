@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<title>Python for Kids</title>
+<meta name="generator" content="SiteBaker v1.8.5" />
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+<meta content="utf-8" http-equiv="encoding" />
+<meta name="viewport" content="width=device-width" />
+<link rel="stylesheet" href="/theme/main.v19.css" type="text/css" media="screen"></link>
+<link rel="stylesheet" href="/resources/highlight.v1.css" type="text/css" media="screen"></link>
+<link href="/resources/lightbox.v2.51.css" rel="stylesheet" />
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/resources/jquery-1.8.3.min.js"></script>
+</head>
+<body>
+<div id="header">
+	<div id="logo">
+		<img src="/resources/jasonrbriggs.png" alt="Site logo" />
+	</div>
+	<div id="nav">
+	<ul class="drop">
+    	<li><img src="/resources/dropdown-menu.png" alt="dropdown menu button" />
+	    <ul>
+			<li><a class="navlink" href="/journal">JOURNAL</a></li>
+			<li><a class="navlink" href="/python-for-kids">PYTHON FOR KIDS</a></li>
+			<li><a class="navlink" href="/bio.html">BIO</a></li>
+			<li><a class="navlink" href="/contact.html">CONTACT</a></li>
+		</ul>
+		</li>
+	</ul>
+	</div>
+	<div>
+		<div class="navicons">
+			<a class="navimglink" onclick="javascript:return searchToggle()"><img src="/resources/search-15.png" alt="Search" /></a>
+			<div id="nonsearchspan">
+			<a class="navimglink" href="/journal/feed.xml"><img src="/resources/rss-15.png" alt="RSS feed" /></a>
+			<a class="navimglink" href="http://twitter.com/jason_r_briggs"><img src="/resources/twitter-14.jpg" alt="Twitter" /></a>
+			<a class="navimglink" href="http://mstdn.io/@jasonrbriggs"><img src="/resources/mastodon.png" alt="Mastodon" /></a>
+			<a class="navimglink" href="http://github.com/jasonrbriggs"><img src="/resources/github-15.png" alt="Github" /></a>
+			<a class="navimglink" href="http://www.goodreads.com/author/show/7052551.Jason_R_Briggs"><img src="/resources/goodreads-15.png" alt="Good Reads" /></a>
+			<a class="navimglink" href="/tags/"><img src="/resources/tag-15.jpg" alt="Tag cloud" /></a>
+			</div>
+			<div id="searchspan" style="display:none"><form id="searchform" action="/api/search" method="get"><input type="text" value="" name="text" onkeypress="return checkSubmit(this, event)" /></form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="contentcontainer">
+
+	<div class="main">
+		<div id="pageheader">
+			<img class="pageheaderimg" alt="banner image" src="/resources/pfk-banner.jpg" />
+		</div>
+	
+		<div class="content">
+			<div class="title">
+				<h1>Python for Kids</h1>
+				<h2>Puzzle Number 4 (Solution)</h2>
+			</div>
+	
+			<div class="postmeta">
+				<a href="/python-for-kids/puzzles/puzzle4-solution.html"><img class="nofloat" src="/resources/link13.png" /> Permalink</a> <a href="https://twitter.com/share?url=http%3A//jasonrbriggs.com/python-for-kids/puzzles/puzzle4-solution.html&via=jason_r_briggs"><img class="nofloat" src="/resources/twitter-14.jpg" /> Twitter</a> 
+			</div>
+	
+			<div class="post"><p><em>Posted, 19 Feb 2013</em></p>
+
+<p>The solution to this might seem straightforward if you take the code for the moving platforms puzzle from Chapter 18. We simply modify the MovingPlatform so that it moves vertically, rather than horizontally, right? </p>
+
+<p>The MovingPlatform class currently looks like this:</p>
+
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">MovingPlatformSprite</span><span class="p">(</span><span class="n">PlatformSprite</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">,</span> <span class="n">photo_image</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+        <span class="n">PlatformSprite</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">,</span> <span class="n">photo_image</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
+    <span class="k">def</span> <span class="nf">coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">xy</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">coords</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">x1</span> <span class="o">=</span> <span class="n">xy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">y1</span> <span class="o">=</span> <span class="n">xy</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">x2</span> <span class="o">=</span> <span class="n">xy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">y2</span> <span class="o">=</span> <span class="n">xy</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span>
+    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">&gt;</span> <span class="mf">0.03</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>        
+            <span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></div>
+
+<p>So we could just copy this class and change the x variable to a y variable like so:</p>
+
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">VMovingPlatformSprite</span><span class="p">(</span><span class="n">PlatformSprite</span><span class="p">):</span>
+    <span class="c1">###</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">,</span> <span class="n">photo_image</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+        <span class="n">PlatformSprite</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">,</span> <span class="n">photo_image</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span><span class="c1">###</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="c1">###</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
+    <span class="k">def</span> <span class="nf">coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">xy</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">coords</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">x1</span> <span class="o">=</span> <span class="n">xy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">y1</span> <span class="o">=</span> <span class="n">xy</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">x2</span> <span class="o">=</span> <span class="n">xy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">y2</span> <span class="o">=</span> <span class="n">xy</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span>
+    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">&gt;</span> <span class="mf">0.03</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="c1">###</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+            <span class="c1">###</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">:</span><span class="c1">###</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+                <span class="c1">###</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">###</span>
+</code></pre></div>
+
+<p>Note we've also changed the <code>move</code> function to use <code>0, self.y</code>, rather than <code>self.x, 0</code> in the code above.</p>
+
+<p>Let's also change platform5 to be a VMovingPlatformSprite:</p>
+
+<div class="codehilite"><pre><span></span><code><span class="n">platform5</span> <span class="o">=</span> <span class="n">VMovingPlatformSprite</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s2">&quot;platform2.gif&quot;</span><span class="p">),</span> \
+    <span class="mi">175</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+
+<p>The problem is, if you try running the code now, the platform moves up and down, but the stick figure falls through when you jump on it.</p>
+
+<p>So what's going wrong?</p>
+
+<p>Simply put, our collision detection isn't designed for two vertically moving objects. We need to change the StickFigureSprite class so that it starts moving at the same speed as the platform as soon as it touches, and we need a way for it to tell whether another sprite is moving. </p>
+
+<p>The first change is to the Sprite class, adding the object variable <code>y</code>. This is used when the stick figure collides with any sprite, so it can tell whether or not the sprite is moving (vertically). Remember that with parent classes and child classes, the child <em>inherits</em> the variables of the parent (make sure you read Chapter 8 if that doesn't make a lot of sense to you):</p>
+
+<div class="codehilite"><pre><span></span><code><span class="c1">###</span>
+<span class="k">class</span> <span class="nc">Sprite</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">game</span> <span class="o">=</span> <span class="n">game</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endgame</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span> <span class="o">=</span> <span class="bp">None</span><span class="c1">###</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1">###</span>
+    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    <span class="k">def</span> <span class="nf">coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="c1">###</span>
+</code></pre></div>
+
+<p>The next change is to the new VMovingPlatformSprite class. We add another object variable here called <code>old_y</code>, which we'll use in the <code>move</code> function. When we move the platform (which is every 0.03 of a second), we replace the value of <code>y</code> with the value of <code>old_y</code>, we then move the platform (vertically) the number of pixels specified by <code>y</code>. If the <code>move</code> function has been called and 0.03 seconds hasn't elapsed, then we set the <code>y</code> variable back to 0. </p>
+
+<p>Why are we doing this? So that the stick figure can also use the <code>y</code> variable, which we'll see in the next code snippet. The <code>y</code> variable will always contain a value which shows how far the platform is moving (it will be either 2 or -2, or 0).</p>
+
+<div class="codehilite"><pre><span></span><code><span class="c1">###</span>
+<span class="k">class</span> <span class="nc">VMovingPlatformSprite</span><span class="p">(</span><span class="n">PlatformSprite</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">,</span> <span class="n">photo_image</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+        <span class="n">PlatformSprite</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">,</span> <span class="n">photo_image</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="c1">###</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">old_y</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="c1">###</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
+    <span class="k">def</span> <span class="nf">coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">xy</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">coords</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">x1</span> <span class="o">=</span> <span class="n">xy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">y1</span> <span class="o">=</span> <span class="n">xy</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">x2</span> <span class="o">=</span> <span class="n">xy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">y2</span> <span class="o">=</span> <span class="n">xy</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span>
+    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">&gt;</span> <span class="mf">0.03</span><span class="p">:</span><span class="c1">###</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">old_y</span>
+            <span class="c1">###</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>        
+            <span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span><span class="c1">###</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">old_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+                <span class="c1">###</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">###</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></div>
+
+<p>There are a number of changes to the StickFigureSprite class. The first is to add new object variables. At the moment, we determine whether the stick figure is jumping by looking at the value of the <code>y</code> variable - once the figure starts moving with an elevator, we can't use that variable any more. So we add a new variable <code>jumping</code>, which will tell us when the figure is jumping (and not standing on another moving platform). The second new variable is <code>follow_platform</code>. This will be used to 'hold' the platform when the figure lands on it (this is a bit like saying: "hey Stick Figure, remember this platform, as we will be following its movement"):</p>
+
+<div class="codehilite"><pre><span></span><code><span class="c1">###</span>
+<span class="k">class</span> <span class="nc">StickFigureSprite</span><span class="p">(</span><span class="n">Sprite</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">):</span>
+        <span class="n">Sprite</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">images_left</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">PhotoImage</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s2">&quot;figure-L1.gif&quot;</span><span class="p">),</span>
+            <span class="n">PhotoImage</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s2">&quot;figure-L2.gif&quot;</span><span class="p">),</span>
+            <span class="n">PhotoImage</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s2">&quot;figure-L3.gif&quot;</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">images_right</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">PhotoImage</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s2">&quot;figure-R1.gif&quot;</span><span class="p">),</span>
+            <span class="n">PhotoImage</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s2">&quot;figure-R2.gif&quot;</span><span class="p">),</span>
+            <span class="n">PhotoImage</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s2">&quot;figure-R3.gif&quot;</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">game</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_image</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">470</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">images_left</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">anchor</span><span class="o">=</span><span class="s1">&#39;nw&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_image</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_image_add</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jump_count</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">###</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jumping</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">follow_platform</span> <span class="o">=</span> <span class="bp">None</span>
+</code></pre></div>
+
+<p>Next we need to change the <code>left</code>, <code>right</code>, and <code>jump</code> functions, to use the new <code>jumping</code> variable:</p>
+
+<div class="codehilite"><pre><span></span><code>    <span class="c1">###</span>
+    <span class="k">def</span> <span class="nf">turn_left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span><span class="c1">###</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jumping</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="c1">###</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+    <span class="k">def</span> <span class="nf">turn_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span><span class="c1">###</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jumping</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="c1">###</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="k">def</span> <span class="nf">jump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span><span class="c1">###</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jumping</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="c1">###</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">jump_count</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">###</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">jumping</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">follow_platform</span> <span class="o">=</span> <span class="bp">None</span>
+</code></pre></div>
+
+<p>And the same change is needed in the <code>animate</code> function, which also needs to know when the figure is jumping, so it can display the correct image:</p>
+
+<div class="codehilite"><pre><span></span><code>    <span class="c1">###</span>
+    <span class="k">def</span> <span class="nf">animate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">&gt;</span> <span class="mf">0.1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_image</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_image_add</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_image</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">current_image_add</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_image</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">current_image_add</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span><span class="c1">###</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jumping</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="c1">###</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">itemconfig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">images_left</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">itemconfig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">images_left</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">current_image</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span><span class="c1">###</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jumping</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="c1">###</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">itemconfig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">images_right</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">itemconfig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">images_right</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">current_image</span><span class="p">])</span><span class="c1">###</span>
+</code></pre></div>
+
+<p>Lots of changes are required to the <code>move</code> function. The first is to also check the value of the <code>jumping</code> variable before we make any changes to the <code>jump_count</code>:</p>
+
+<div class="codehilite"><pre><span></span><code>    <span class="c1">###</span>
+    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">animate</span><span class="p">()</span><span class="c1">###</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jumping</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="c1">###</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">jump_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jump_count</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">4</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">jump_count</span> <span class="o">-=</span> <span class="mi">1</span><span class="c1">###</span>
+</code></pre></div>
+
+<p>Further down in this function, we set the <code>jumping</code> variable to False whenever we set the <code>y</code> variable to 0.  In an earlier version of the code, we used the <code>y</code> variable to tell if the figure was jumping (if the value is less than or greater than 0 then the figure is jumping up or down) - now we use the <code>jumping</code> variable. When <code>y</code> is 0, <code>jumping</code> should be set to False:</p>
+
+<div class="codehilite"><pre><span></span><code>        <span class="c1">###</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">co</span><span class="o">.</span><span class="n">y2</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">canvas_height</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">###</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">jumping</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="c1">###</span>
+            <span class="n">bottom</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">co</span><span class="o">.</span><span class="n">y1</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">###</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">jumping</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="c1">###</span>
+            <span class="n">top</span> <span class="o">=</span> <span class="bp">False</span><span class="c1">###</span>
+</code></pre></div>
+
+<p>We also need to add a new collision check. If the stick figure has landed on the elevator, then we need to keep checking whether he has walked off the edge. The <em>else</em> part of this statement, is used when the figure is still standing on the platform. If he is, there's no point in doing any further collision detection, so we set the <code>bottom</code>, <code>left</code> and <code>right</code> variables to False:</p>
+
+<div class="codehilite"><pre><span></span><code>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">follow_platform</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">collided_bottom</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">co</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">follow_platform</span><span class="o">.</span><span class="n">coords</span><span class="p">()):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">follow_platform</span> <span class="o">=</span> <span class="bp">None</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">follow_platform</span><span class="o">.</span><span class="n">y</span>
+                <span class="n">bottom</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="n">left</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="n">right</span> <span class="o">=</span> <span class="bp">False</span>
+</code></pre></div>
+
+<p>The final changes are to the loop at the bottom of this function. We loop through all the sprites in the game to see if the figure has collided with any of them. We add a new if-statement which says: "if we still need to check collisions at the bottom of the figure, <strong>and</strong> we have collided at the bottom with the sprite, <strong>and</strong> that sprite is moving vertically (<code>sprite.y != 0</code>), then we should start following that sprite (<code>self.follow_platform = sprite</code>), we should set the stick figure's <code>y</code> variable to the same value as the sprite (<code>self.y = sprite.y - 1</code> -- with a slight offset), and finally we should stop all further collision detection in this loop".</p>
+
+<div class="codehilite"><pre><span></span><code>        <span class="c1">###</span>
+        <span class="k">for</span> <span class="n">sprite</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">sprites</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">sprite</span> <span class="o">==</span> <span class="bp">self</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">sprite_co</span> <span class="o">=</span> <span class="n">sprite</span><span class="o">.</span><span class="n">coords</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">top</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">collided_top</span><span class="p">(</span><span class="n">co</span><span class="p">,</span> <span class="n">sprite_co</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+                <span class="n">top</span> <span class="o">=</span> <span class="bp">False</span><span class="c1">###</span>
+            <span class="k">if</span> <span class="n">bottom</span> <span class="ow">and</span> <span class="n">collided_bottom</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">co</span><span class="p">,</span> <span class="n">sprite_co</span><span class="p">)</span> <span class="ow">and</span> <span class="n">sprite</span><span class="o">.</span><span class="n">y</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">follow_platform</span> <span class="o">=</span> <span class="n">sprite</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">sprite</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">jumping</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="n">falling</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="n">bottom</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="n">top</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="c1">###</span>
+            <span class="k">if</span> <span class="n">bottom</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">collided_bottom</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">co</span><span class="p">,</span> <span class="n">sprite_co</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">sprite_co</span><span class="o">.</span><span class="n">y1</span> <span class="o">-</span> <span class="n">co</span><span class="o">.</span><span class="n">y2</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">###</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">jumping</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="c1">###</span>
+                <span class="n">falling</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="n">bottom</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="n">top</span> <span class="o">=</span> <span class="bp">False</span><span class="c1">###</span>
+</code></pre></div>
+
+<p>Okay, so you can probably see that the changes required to add elevators isn't straightforward at all. If you managed to get this working on your own, well done. If you're struggling to understand this code, break it down into smaller parts. First change the original code so that rather than using the <code>y</code> variable to tell when the figure is jumping, use the new <code>jumping</code> variable. Try that out so you know it works. Then add the elevator and don't worry when the stick figure falls through. Then try making the changes so that the stick figure follows the movement of the platform. Each time you make a small change, keep a copy of your previous version so you can always go back if something goes seriously wrong.</p>
+
+<p>You can download the full code <a href="puzzle4-solution.py.txt">here</a>.</p>
+</div>
+		</div>
+	</div>
+	
+</div>
+
+<div>
+<script type="text/javascript">
+$('[href*="png"]').attr('rel', 'lightbox');
+$('[href*="jpg"]').attr('rel', 'lightbox');
+</script>
+<script type="text/javascript" src="/resources/utils.v2.js"></script>
+<script type="text/javascript" src="/resources/lightbox.v2.51.js"></script>
+</div>
+</body>
+</html>

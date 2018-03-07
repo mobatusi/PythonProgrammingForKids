@@ -1,0 +1,25 @@
+plugins: menu
+title: Python for Kids
+sub-title: Puzzle Number 3 (Solution)
+banner-image: resources/pfk-banner.jpg
+
+
+_Posted, 25 Jan 2013_
+
+This code is hopefully pretty straightforward to figure out, however if you don't set the speed of the turtle, you'll be waiting ages for it to draw:
+
+```python
+import turtle
+t = turtle.Pen()
+t.speed(20)
+```
+
+To draw the square spiral, we just loop 500 times and store the increasing number of the loop (0, 1, 2, 3, 4, 5, ...) in the variable `x`. For each loop, the turtle moves forward the number of pixels in `x` and then turns right 90 degrees (so move forward, turn right, move forward a bit more, turn right, and so on).
+
+```python
+for x in range(0, 500):
+    t.forward(x)
+    t.right(90)
+```
+
+You can download the full code [here](puzzle3-solution.py.txt).

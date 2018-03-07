@@ -1,0 +1,40 @@
+plugins: menu
+title: Python for Kids
+sub-title: Puzzle Number 5 (Solution)
+shadow: dodecagon
+banner-image: resources/pfk-banner.jpg
+
+
+_Posted, 6 Mar 2013_
+
+To create this pattern, the turtle is drawing 12 rough circles (well, a [dodecagon](http://en.wikipedia.org/wiki/Dodecagon) to be exact) - turning slightly after drawing each shape. Here's what it looks like after drawing the first dodecagon:
+
+[![dodecagon](puzzle5-1circle-small.png)](puzzle5-1circle.png)
+
+The code to draw one dodecagon would be something like this:
+
+```python
+import turtle
+t = turtle.Pen()
+for y in range(0, 12):
+    t.forward(50)
+    t.left(30)
+```
+
+So the turtle moves forward 50 pixels, then turns left 30 degrees, and loops 12 times.
+
+To draw the pattern, we add another loop (looping 12 times again), and turn left 30 degrees after drawing each shape:
+
+```python
+###
+import turtle
+t = turtle.Pen()###
+for x in range(0, 12):
+    ###
+    for y in range(0, 12):
+        t.forward(50)
+        t.left(30)###
+    t.left(30)
+```
+
+You can download the code [here](puzzle5-solution.py.txt).

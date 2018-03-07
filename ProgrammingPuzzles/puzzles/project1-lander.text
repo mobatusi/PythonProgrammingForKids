@@ -1,0 +1,28 @@
+plugins: menu
+title: Python for Kids
+sub-title: Project Suggestion #1 - Lunar Lander
+shadow: lunar lander,lunar lander work in progress
+banner-image: resources/pfk-banner.jpg
+
+Project Suggestion #1 
+=====================
+## Lunar Lander
+
+_Posted, 11 Mar 2013_
+
+Difficulty: medium - hard
+
+[Lunar Lander](http://en.wikipedia.org/wiki/Lunar_Lander_\(arcade_game\)) was a [vector](http://en.wikipedia.org/wiki/Vector_graphics)-based arcade game released in the 1970s, where you controlled a spacecraft landing on the lunar surface. You could rotate your craft, and then activate your engines to move to the left or right, and to control the speed of your descent. Land too hard and your spacecraft exploded, land on a smaller platform and you got a higher score. Take too long to land and you run out of fuel and drop like a stone (you can find a version of Lunar Lander on the Atari [website](http://www.atari.com/arcade/lunar_lander) if you want to try it out for yourself).
+
+![lunar lander](lunar-lander.png)  
+(Image courtesy [Wikipedia](http://en.wikipedia.org/wiki/File:Lunar_Lander.png))
+
+We're not going to try anything quite that ambitious, but we can certainly create a simple version of the lander. Our version of the game will have a downward facing engine that turns on when the player hits the down arrow (and turns off when they hit the key again). A left thruster which fires when they press the left arrow key, and a right thruster which fires when they press the right arrow. The lander will fall from the centre of the screen and the player will try to land on a small platform without hitting it too hard. 
+
+You don't have to spend too much time making it look good - at least to start with, try playing with a simple square for the lander, a rectangle for the platform, and use text to display whether the engine or the thrusters are firing, and for the fuel level. Chapters 12, 13 and 14 in the [book](/python-for-kids/) will probably help you get started.
+
+![lunar lander work in progress](lunar-lander-wip.png)
+
+Once you get the basic game working, there's all sorts of things you can do to tidy it up and make it look good. 
+
+_Update: you can find part of the solution [here](/python-for-kids/puzzles/project1-lander-solution.html)._

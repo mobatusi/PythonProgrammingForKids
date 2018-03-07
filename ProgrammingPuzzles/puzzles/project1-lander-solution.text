@@ -1,0 +1,244 @@
+plugins: menu
+title: Python for Kids
+sub-title: Project #1 - Lunar Lander - Partial Solution
+banner-image: resources/pfk-banner.jpg
+
+Project #1 - Lunar Lander - Partial Solution
+============================================
+
+For this program, we need a class for the game itself (similar to the examples in the book), a class for the lander, and one for the platform. 
+
+To start with we'll need to import the `tkinter` and `time` modules:
+
+```python
+from tkinter import *
+import time
+```
+
+Next we'll create a few variables which will contain values we'll use later in the program to calculate the effect of gravity on the falling speed of the lander, and the effect of the engines/thrusters:
+
+```python
+GRAVITY = 0.0005
+ENGINE_POWER = -0.00003
+THRUSTER_POWER = 0.00001
+MAXIMUM_ENGINE_POWER = -0.002
+MAXIMUM_THRUSTER_POWER = 0.0001
+```
+
+Our game class will be quite familiar if you've reached the last few chapters in the book:
+
+```python
+class Game:
+    def __init__(self):
+        self.tk = Tk()
+        self.tk.title("Lander")
+        self.tk.resizable(0, 0)
+        self.tk.wm_attributes("-topmost", 1)
+        self.canvas = Canvas(self.tk, width=700, height=500, highlightthickness=0)
+        self.canvas.pack()
+        self.canvas.focus_set()
+        self.tk.update()
+        self.canvas_height = 500
+        self.canvas_width = 1000
+        self.sprites = []
+        self.running = True
+    def mainloop(self):
+        while 1:
+            if self.running == True:
+                for sprite in self.sprites:
+                    sprite.move()
+            self.tk.update_idletasks()
+            self.tk.update()
+            time.sleep(0.01)
+
+g = Game()
+g.mainloop()
+```
+
+This class has an `__init__` function and a `mainloop` function. The mainloop is similar to the example in the book - it loops forever, and if the variable `running` is True, it loops through any sprites and calls their `move` function. If this code doesn't make sense, try reading the final section in [Python for Kids](/python-for-kids), which might help. If we run this program now, a canvas will appear, but nothing much will happen (however, it's a good idea to run our program as we go, to make sure we haven't introduced any bugs in our code).
+
+Our lander is just a small square. You could draw something a little more realistic - but for our purposes a square will do. This will help us test out the logic of the game, and it's easier enough to make it look better, once we're happy with how our program works. To start with we need an `__init__` function for our `Lander` class. Let's create the Lander class just after our Game class:
+
+```python
+    ###
+    def mainloop(self):
+        while 1:
+            if self.running == True:
+                for sprite in self.sprites:
+                    sprite.move()
+            self.tk.update_idletasks()
+            self.tk.update()
+            time.sleep(0.01)###
+
+class Lander:
+    def __init__(self, game):
+        self.canvas = game.canvas
+        self.id = self.canvas.create_rectangle(340, 0, 360, 20)
+        self.time = time.time()
+        self.x = 0
+        self.y = 0.01
+        self.engine_x = 0
+        self.engine_y = 0
+        self.fuel = 2000
+        self.down = False
+        self.left = False
+        self.right = False
+```
+
+Our `__init__` takes one parameter - which will be an object of our Game class. We then create a number of object variables: `canvas` stores the canvas variable of the game object, `id` stores the identifier of the rectangle (our lander square) we draw on the screen, `time` stores the current time (we'll see that used shortly), `x` and `y` are the horizontal and vertical amounts to move the lander across the screen, `engine_x` is a variable to use for the horizontal power of the thrusters, `engine_y` will be used for the vertical power of the engine, and `fuel` is the amount of fuel the lander has left. The `down`, `left`, and `right` variables are used to flag whether the engine is firing (the down key has been pressed) or the thrusters are firing (left or right keys were pressed).
+
+The remainder of the function is used to bind the keypresses to functions we'll create shortly, and create text that will be displayed on the top left of the canvas:
+
+```python
+        ###
+        self.down = False
+        self.left = False
+        self.right = False ###
+        game.canvas.bind_all('<KeyPress-Down>', self.engine_down)
+        game.canvas.bind_all('<KeyPress-Left>', self.engine_left)
+        game.canvas.bind_all('<KeyPress-Right>', self.engine_right)
+        self.engine_y_text = self.canvas.create_text(0, 10, text='Main Engine: off', anchor = 'nw')
+        self.engine_x_text = self.canvas.create_text(0, 30, text='Thrusters: off', anchor = 'nw')
+        self.engine_fuel_text = self.canvas.create_text(0, 50, text='Fuel: %s' % self.fuel, anchor = 'nw')
+```
+
+The `engine_down`, `engine_left` and `engine_right` functions are all quite similar. In each case, we set check the associated variable (`down`, `left`, or `right`) - if the value is True it means the engine (or thruster) is already switched on, so we want to switch it off again (hit the key once, turn it on, hit the key again, turn it off). So we set the variable value to False, set the `engine_y` (or `engine_x`) variable to 0, and then change the text to display that the engine (or, again, thruster) is off.
+If the engine isn't already on (the variable was False), then we switch it on. In this case, we just set the variable to True and change the text. Why don't we set the `engine_y` or `engine_x` variables? We'll see how those values are calculated shortly.
+
+```python
+        ###
+        self.engine_y_text = self.canvas.create_text(0, 10, text='Main Engine: off', anchor = 'nw')
+        self.engine_x_text = self.canvas.create_text(0, 30, text='Thrusters: off', anchor = 'nw')
+        self.engine_fuel_text = self.canvas.create_text(0, 50, text='Fuel: %s' % self.fuel, anchor = 'nw') 
+        ###
+    def engine_down(self, evt):
+        if self.down:
+            self.down = False
+            self.engine_y = 0
+            self.canvas.itemconfig(self.engine_y_text, text='Main Engine: off')
+        else:
+            self.down = True
+            self.canvas.itemconfig(self.engine_y_text, text='Main Engine: on')
+    def engine_left(self, evt):
+        if self.right or self.left:
+            self.left = False
+            self.right = False
+            self.engine_x = 0
+            self.canvas.itemconfig(self.engine_x_text, text='Thrusters: off')
+        else:
+            self.left = True
+            self.canvas.itemconfig(self.engine_x_text, text='Thrusters: left')
+    def engine_right(self, evt):
+        if self.right or self.left:
+            self.left = False
+            self.right = False
+            self.engine_x = 0
+            self.canvas.itemconfig(self.engine_x_text, text='Thrusters: off')
+        else:
+            self.right = True
+            self.canvas.itemconfig(self.engine_x_text, text='Thrusters: right')
+```
+
+The final function in the Lander class is `move`:
+
+```python
+    ###
+    def engine_right(self, evt):
+        if self.right or self.left:
+            self.left = False
+            self.right = False
+            self.engine_x = 0
+            self.canvas.itemconfig(self.engine_x_text, text='Thrusters: off')
+        else:
+            self.right = True
+            self.canvas.itemconfig(self.engine_x_text, text='Thrusters: right')
+    ###
+    def move(self):
+        now = time.time()
+        time_since_last = now - self.time
+        if time_since_last > 0.1:
+```
+
+The first part of this function, we get the time and store the value in variable `now`. We then work out the last time we moved the lander by subtracting `now` from the object variable `time`. If `time_since_last` is more than a tenth of a second, we'll continue with the rest of the code in this function:        
+        
+```python
+        ###
+        if time_since_last > 0.1: ###
+            if self.down and self.engine_y > MAXIMUM_ENGINE_POWER:
+                self.engine_y += ENGINE_POWER
+            if self.left and self.engine_x < MAXIMUM_THRUSTER_POWER:
+                self.engine_x += THRUSTER_POWER
+            elif self.right and self.engine_x > -MAXIMUM_THRUSTER_POWER:
+                self.engine_x -= THRUSTER_POWER
+```
+
+If the down key was pressed, then the `down` object variable will be True. If that variable is true *AND* the value of the `engine_y` variable is larger than the value of `MAXIMUM_ENGINE_POWER`, then we'll add the value of `ENGINE_POWER` to our `engine_y` object variable. Let's say the game has just started, and the player hits the down button, and it's the first time Python has run this function. The value of `down` will be True, the value of `engine_y` will be 0. So we'll add -0.00003 and the new value of `engine_y` will be -0.00003.
+It's a similar process for the `left` and `right` object variables. We check if the value of `engine_x` has reached the value of `MAXIMUM_THRUSTER_POWER` and if not, we add (or subtract) the value of `THRUSTER_POWER`.
+
+```python
+            ###
+            elif self.right and self.engine_x > -MAXIMUM_THRUSTER_POWER:
+                self.engine_x -= THRUSTER_POWER 
+            ###
+            if self.down:
+                self.fuel -= 2
+            if self.left or self.right:
+                self.fuel -= 1
+            if self.fuel < 0:
+                self.fuel = 0
+            self.canvas.itemconfig(self.engine_fuel_text, text='Fuel: %s' % self.fuel)
+```
+
+Next we reduce the amount of fuel in the Lander's tanks, by subtracting an amount from the `fuel` variable if any of the `down`, `left` or `right` variables are True. The engine has more power, so it reduces fuel by 2 rather than 1. Finally, in this code, if the fuel is less than zero, we just set it back to zero (not the best way to write this section of code, but it has the advantage of being simple), and then update the text to show the amount of fuel available.
+
+```python
+            if self.fuel == 0:
+                self.engine_y = 0
+                self.engine_x = 0
+            self.x = self.x + (time_since_last * self.engine_x)
+            self.y = self.y + (time_since_last * GRAVITY) + (time_since_last * self.engine_y)
+```
+
+In the final section of this function, we check whether the amount of fuel is 0. If it is, then we turn our engine/thrusters off by setting the `engine_y` and `engine_x` variables to 0.
+We then calculate the new position of the lander. The `x` value is easy to calculate - multiply the value of `engine_x` by the time since we last ran the move function (that's the value of `time_since_last`), and add to the last value of the `x` variable. Why are we doing this? Because the lander is supposed to be floating in space, so the effective of the engine should be cumulative.
+The `y` value is slightly more complicated because we need to calculate the effect of gravity on the lander. So once again we multiply `time_since_last` by the value of `engine_y`, and add that to the `y` variable, but we also multiply `time_since_last` by the value of the `GRAVITY` variable and add.  
+Once we've calculated these two values, we can move the lander:
+
+```python
+            ###
+            self.x = self.x + (time_since_last * self.engine_x)
+            self.y = self.y + (time_since_last * GRAVITY) + (time_since_last * self.engine_y) ###
+            self.canvas.move(self.id, self.x, self.y)
+```
+
+The final part of our code is to create a class for the Platform, then to create an object of each of our two new classes, and add them to the list of sprites that the Game stores:
+
+```python
+class Platform:
+    def __init__(self, game):
+        self.canvas = game.canvas
+        self.id = self.canvas.create_rectangle(600, 480, 650, 490)
+        
+###
+g = Game() ###
+lander = Lander(g)
+platform = Platform(g)
+g.sprites.append(lander)
+###
+g.mainloop() ###
+```
+
+You might've noticed there's some code missing. If you run this game at the moment, it won't finish when you land too hard at the bottom of the screen, or miss the platform. If you've got to the end of the [book](/python-for-kids), and understand how to do simple collision detection, hopefully you can figure out how to add this code. Here's one possible modification to the `move` function which shows how you can check if the lander hits the bottom of the screen too hard. At the moment, it just prints a message (Okay or BOOM) to the console:
+
+```python
+    ###
+    def move(self): ###
+        if self.canvas.coords(self.id)[3] >= 500:
+            if self.y > 0.4:
+                print('BOOM')
+            else:
+                print('Okay')
+            return
+```
+
+You can download the full code for this solution [here](/python-for-kids/puzzles/project1-lander.py.txt).

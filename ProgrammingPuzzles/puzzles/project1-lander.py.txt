@@ -1,0 +1,135 @@
+from tkinter import *
+import time
+
+GRAVITY = 0.0005
+ENGINE_POWER = -0.00003
+THRUSTER_POWER = 0.00001
+MAXIMUM_ENGINE_POWER = -0.002
+MAXIMUM_THRUSTER_POWER = 0.0001
+
+class Game:
+    def __init__(self):
+        self.tk = Tk()
+        self.tk.title("Lander")
+        self.tk.resizable(0, 0)
+        self.tk.wm_attributes("-topmost", 1)
+        self.canvas = Canvas(self.tk, width=700, height=500, highlightthickness=0)
+        self.canvas.pack()
+        self.canvas.focus_set()
+        self.tk.update()
+        self.canvas_height = 500
+        self.canvas_width = 1000
+        self.sprites = []
+        self.running = True
+
+    def mainloop(self):
+        while 1:
+            if self.running == True:
+                for sprite in self.sprites:
+                    sprite.move()
+            self.tk.update_idletasks()
+            self.tk.update()
+            time.sleep(0.01)
+
+class Lander:
+    def __init__(self, game):
+        self.canvas = game.canvas
+        self.id = self.canvas.create_rectangle(340, 0, 360, 20)
+        self.time = time.time()
+        self.x = 0
+        self.y = 0.01
+        self.engine_y = 0
+        self.engine_x = 0
+        self.fuel = 2000
+        self.down = False
+        self.left = False
+        self.right = False
+        game.canvas.bind_all('<KeyPress-Down>', self.engine_down)
+        game.canvas.bind_all('<KeyPress-Left>', self.engine_left)
+        game.canvas.bind_all('<KeyPress-Right>', self.engine_right)
+        self.engine_y_text = self.canvas.create_text(0, 10, text='Main Engine: off', anchor = 'nw')
+        self.engine_x_text = self.canvas.create_text(0, 30, text='Thrusters: off', anchor = 'nw')
+        self.engine_fuel_text = self.canvas.create_text(0, 50, text='Fuel: %s' % self.fuel, anchor = 'nw')
+    
+    def move(self):
+        #
+        # exercise for the reader. Here is where you would check whether the lander (our square box)
+        # has collided with the platform. At the moment, it just checks whether the 
+        # bottom of the square box has hit the bottom of the canvas (y position 500)
+        #
+        if self.canvas.coords(self.id)[3] >= 500:
+            if self.y > 0.4:
+                print('BOOM')
+            else:
+                print('Okay')
+            return        
+        
+        now = time.time()
+        time_since_last = now - self.time
+        
+        if time_since_last > 0.1:
+            if self.down and self.engine_y > MAXIMUM_ENGINE_POWER:
+                self.engine_y += ENGINE_POWER
+
+            if self.left and self.engine_x < MAXIMUM_THRUSTER_POWER:
+                self.engine_x += THRUSTER_POWER
+            elif self.right and self.engine_x > -MAXIMUM_THRUSTER_POWER:
+                self.engine_x -= THRUSTER_POWER
+            
+            if self.down:
+                self.fuel -= 2
+                
+            if self.left or self.right:
+                self.fuel -= 1
+            
+            if self.fuel < 0:
+                self.fuel = 0
+                
+            self.canvas.itemconfig(self.engine_fuel_text, text='Fuel: %s' % self.fuel)
+            
+            if self.fuel <= 0:
+                self.engine_y = 0
+                self.engine_x = 0
+            self.y = self.y + (time_since_last * GRAVITY) + (time_since_last * self.engine_y)
+            self.x = self.x + (time_since_last * self.engine_x)
+            self.canvas.move(self.id, self.x, self.y)
+        
+    def engine_down(self, evt):
+        if self.down:
+            self.down = False
+            self.engine_y = 0
+            self.canvas.itemconfig(self.engine_y_text, text='Main Engine: off')
+        else:
+            self.down = True
+            self.canvas.itemconfig(self.engine_y_text, text='Main Engine: on')
+
+    def engine_left(self, evt):
+        if self.right or self.left:
+            self.left = False
+            self.right = False
+            self.engine_x = 0
+            self.canvas.itemconfig(self.engine_x_text, text='Thrusters: off')
+        else:
+            self.left = True
+            self.canvas.itemconfig(self.engine_x_text, text='Thrusters: left')
+
+    def engine_right(self, evt):
+        if self.right or self.left:
+            self.left = False
+            self.right = False
+            self.engine_x = 0
+            self.canvas.itemconfig(self.engine_x_text, text='Thrusters: off')
+        else:
+            self.right = True
+            self.canvas.itemconfig(self.engine_x_text, text='Thrusters: right')
+  
+class Platform:
+    def __init__(self, game):
+        self.canvas = game.canvas
+        self.id = self.canvas.create_rectangle(600, 480, 650, 490)
+        
+g = Game()
+lander = Lander(g)
+platform = Platform(g)
+g.sprites.append(lander)
+g.mainloop()

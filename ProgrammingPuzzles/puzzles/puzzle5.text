@@ -1,0 +1,18 @@
+plugins: menu
+title: Python for Kids
+sub-title: Puzzle Number 5
+shadow: Pattern
+banner-image: resources/pfk-banner.jpg
+
+
+_Posted, 12 Feb 2013_
+
+Difficulty: easy - medium
+
+Try drawing the pattern below, using the turtle module. I can't take the credit for this one - I saw a thumbnail image of it in a website for a [logo](http://en.wikipedia.org/wiki/Logo_\(programming_language\)) graphics program a while ago.
+
+[![Pattern](puzzle5-pattern-small.png)](puzzle5-pattern.png)
+
+It's actually a lot easier to draw than you might think. If you follow the lines with your finger (moving in the same way that the turtle might move) it might help you figure out how to do it.
+
+_Update: The full solution can be found [here](puzzle5-solution.html)._

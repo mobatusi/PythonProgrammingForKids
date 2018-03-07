@@ -1,0 +1,8 @@
+import turtle
+
+t = turtle.Pen()
+t.speed(20)
+
+for x in range(0, 500):
+    t.forward(x)
+    t.right(90)

@@ -1,0 +1,7 @@
+import turtle
+t = turtle.Pen()
+for x in range(0, 12):
+    for y in range(0, 12):
+        t.forward(50)
+        t.left(30)
+    t.left(30)
